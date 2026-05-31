@@ -1,0 +1,59 @@
+def mensaje_menu_principal():
+    """
+    muestra las opciones disponibles del menu principal
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+        MENU PRINCIPAL
+
+        1. Área Productos 
+        2. Área Clientes 
+        3. Salir del Sistema
+    """
+    print(mensaje)
+
+def mensaje_menu_area_productos():
+    """
+    muestra las opciones disponibles del menu area productos
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+        MENU AREA PRODUCTOS
+    
+        1 Cargar Producto 
+        2 Modificar Producto 
+        3 Ver Productos 
+        4 Borrar Producto 
+        5 Salir (Vuelve al Menú Principal)
+    """
+    print(mensaje)
+
+def mensaje_menu_productos():
+    """
+    muestra las opciones disponibles del menu ver productos
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+        MENU VER PRODUCTOS
+    
+        1 Ordenar por ID ASC 
+        2 Ordenar por Stock ASC 
+        3 Ordenar por nombre ASC
+        4 Volver
+    """
+    print(mensaje)
