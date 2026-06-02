@@ -57,7 +57,6 @@ def actualizar_producto(matriz_producto: list[list], producto_modificado: list, 
             for columna in range(1, cantidad_columnas):
                 matriz_producto[fila][columna] = producto_modificado[columna]
 
-    print("producto actualizado")
     print(matriz_producto)
 
 def modificar_producto(matriz_producto: list[list]):
@@ -79,8 +78,22 @@ def modificar_producto(matriz_producto: list[list]):
             nuevo_precio = validar_float("nuevo precio: ")
             producto_a_modificar[3] = nuevo_precio
         case _:
-            print("la opcion no coincide")
+            print("la opcion no coincide, producto no modificado")
     
     actualizar_producto(matriz_producto, producto_a_modificar, input_int)
 
-    
+def producto_a_borrar(matriz_producto:list[list]):
+      print(matriz_producto)
+      ids = obtener_ids(matriz_producto)
+
+      input_id = validar_int("ingrese el numero id a borrar: ")
+
+      for fila in range(len(matriz_producto)):
+          if matriz_producto[fila][0] == input_id:
+              matriz_producto.pop(fila)
+              print("producto borrado:")
+              break
+          else:
+              print("id no encontrado:")
+      print(matriz_producto)
+              

@@ -1,7 +1,7 @@
 from validaciones import validar_opcion
 import os
 from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos
-from logica import cargar_producto, modificar_producto
+from logica import cargar_producto, modificar_producto, producto_a_borrar
 
 def menu_area_productos(matriz_productos: list[list]):
     """
@@ -15,7 +15,7 @@ def menu_area_productos(matriz_productos: list[list]):
 
     while run:
         mensaje_menu_area_productos()
-        opcion_input = validar_opcion(1,6)
+        opcion_input = validar_opcion(1,5)
 
         match opcion_input:
             case 1:
@@ -25,11 +25,9 @@ def menu_area_productos(matriz_productos: list[list]):
             case 3:
                 menu_productos()
             case 4:
-                pass
+                producto_a_borrar(matriz_productos)
             case 5:
                 run = False
-            case 6:
-                print(matriz_productos)
 
 def menu_productos():
     """
