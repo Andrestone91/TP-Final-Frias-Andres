@@ -2,7 +2,7 @@ from interfaz import aplicacion
 
 if __name__ == "__main__":
 
-    producto =[
+    producto: list[list]=[
         [1, "Yerba", 25, 4500.0],
         [2, "Azúcar", 40, 1200.0],
         [3, "Arroz", 30, 2100.0],
@@ -15,4 +15,37 @@ if __name__ == "__main__":
         [10, "Alfajor", 60, 800.0]
     ]
 
-    aplicacion(producto)
+    clientes: list[dict] = [
+    {
+        "id": 1,
+        "apellido": "Gomez",
+        "nombre": "Juan",
+        "ciudad": "Buenos Aires"
+    },
+    {
+        "id": 2,
+        "apellido": "Perez",
+        "nombre": "Lucia",
+        "ciudad": "Cordoba"
+    },
+    {
+        "id": 3,
+        "apellido": "Fernandez",
+        "nombre": "Martin",
+        "ciudad": "Rosario"
+    },
+    {
+        "id": 4,
+        "apellido": "Lopez",
+        "nombre": "Carla",
+        "ciudad": "Mendoza"
+    },
+    {
+        "id": 5,
+        "apellido": "Ramirez",
+        "nombre": "Sofia",
+        "ciudad": "La Plata"
+    }
+]
+
+    aplicacion(producto, clientes)

@@ -1,7 +1,7 @@
 from validaciones import validar_opcion
 import os
-from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos
-from logica import cargar_producto, modificar_producto, producto_a_borrar
+from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos, mensaje_menu_clientes
+from logica import cargar_producto, modificar_producto, producto_a_borrar, cargar_cliente, modificar_cliente
 
 def menu_area_productos(matriz_productos: list[list]):
     """
@@ -53,7 +53,29 @@ def menu_productos():
             case 4:
                 run = False
 
-def aplicacion(matriz_productos:list[list]):
+def menu_area_clientes(lista_clientes: list[dict]):
+    """
+    menu para area de clientes
+    arg: 
+    return
+    """
+    run = True
+    while run:
+        mensaje_menu_clientes()
+        opcion_input = validar_opcion(1,5)
+        match opcion_input:
+            case 1:
+                cargar_cliente(lista_clientes)
+            case 2:
+                modificar_cliente(lista_clientes)
+            case 3:
+                pass
+            case 4:
+                pass
+            case 5:
+                run = False
+
+def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
     """
     funcion principal de la aplicacion
 
@@ -74,7 +96,7 @@ def aplicacion(matriz_productos:list[list]):
             case 1:
                 menu_area_productos(matriz_productos)
             case 2:
-                print("opcion no disponible")
+                menu_area_clientes(lista_clientes)
             case 3:
                 run = False
                 print("cerrando programa...")

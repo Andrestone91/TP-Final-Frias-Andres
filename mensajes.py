@@ -57,3 +57,24 @@ def mensaje_menu_productos():
         4 Volver
     """
     print(mensaje)
+
+def mensaje_menu_clientes():
+    """
+    muestra las opciones disponibles del menu area clientes
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+        MENU AREA CLIENTES
+         	
+        1 Cargar Cliente 
+        2 Modificar Cliente 
+        3 Ver CLientes
+        4 Borrar Cliente 
+        5 Salir (Vuelve al Menú Principal)
+    """
+    print(mensaje)
