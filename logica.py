@@ -127,7 +127,7 @@ def cargar_cliente(lista_clientes: list[dict]):
     nuevo_id = ultimo_id + 1
 
     nuevo_cliente = {
-        "id": f"{nuevo_id}",
+        "id": nuevo_id,
         "apellido": f"{input_apellido}",
         "nombre": f"{input_nombre}",
         "ciudad": f"{input_ciudad}"
@@ -194,7 +194,7 @@ def actualizar_cliente(lista_cliente: list[dict], cliente: dict):
     for fila in range(cantidad_filas):
         if lista_cliente[fila].get("id") == cliente.get("id"):
             lista_cliente[fila].update({
-                "id": f"{cliente.get("id")}",
+                "id": cliente.get("id"),
                 "apellido": f"{cliente.get("apellido")}",
                 "nombre": f"{cliente.get("nombre")}",
                 "ciudad": f"{cliente.get("ciudad")}"
@@ -238,3 +238,15 @@ def cliente_a_modificar(cliente: dict, tipo_es_valido: bool, tipo_datos: list[st
         actualizar_cliente(lista_clientes, cliente)
     else:
         print(f"el tipo {input_tipo} es incorrecto vuelva a intentar")
+
+def borrar_cliente(lista_clientes: list[dict]):
+    print(lista_clientes)
+    input_id = validar_int("ingrese el numero id a borrar: ")
+    for fila in range(len(lista_clientes)):
+        if lista_clientes[fila].get("id") == input_id:
+            lista_clientes.pop(fila)
+            print("cliente borrado:")
+            break
+        else:
+            print("id no encontrado:")
+    print(lista_clientes)

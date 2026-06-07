@@ -1,7 +1,7 @@
 from validaciones import validar_opcion
 import os
 from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos, mensaje_menu_clientes
-from logica import cargar_producto, modificar_producto, producto_a_borrar, cargar_cliente, modificar_cliente
+from logica import cargar_producto, modificar_producto, producto_a_borrar, cargar_cliente, modificar_cliente, borrar_cliente
 
 def menu_area_productos(matriz_productos: list[list]):
     """
@@ -71,9 +71,21 @@ def menu_area_clientes(lista_clientes: list[dict]):
             case 3:
                 pass
             case 4:
-                pass
+                borrar_cliente(lista_clientes)
             case 5:
                 run = False
+
+def manejo_lista(lista) -> list[dict]: 
+    """
+    nueva etiqueta 
+
+    Args:
+        lista (List): lista a manejar
+
+    returns:>
+        List: lista manejada
+    """
+    return lista
 
 def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
     """
@@ -85,6 +97,7 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
     return:
 
     """
+    lista_clientes_aux = manejo_lista(lista_clientes)
 
     run = True
 
@@ -96,7 +109,7 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
             case 1:
                 menu_area_productos(matriz_productos)
             case 2:
-                menu_area_clientes(lista_clientes)
+                menu_area_clientes(lista_clientes_aux)
             case 3:
                 run = False
                 print("cerrando programa...")
