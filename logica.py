@@ -134,7 +134,7 @@ def cargar_cliente(lista_clientes: list[dict]):
     }
 
     lista_clientes.append(nuevo_cliente)
-    print(lista_clientes)
+    mostrar_info_completa_clientes(lista_clientes)
 
 def obtener_cliente_por_dato(lista_clientes: list[dict], id: int) -> dict:
     """
@@ -170,7 +170,8 @@ def modificar_cliente(lista_clientes: list[dict]):
     
     if len(cliente) > 0:
         print("cliente seleccionado es: ")
-        print(cliente)
+        info = f'{cliente.get("id")},{cliente.get("apellido")},{cliente.get("nombre")},{cliente.get("ciudad")}'
+        print(info)
 
         input_tipo = validar_str(f"ingrese el tipo de dato a modificar [{tipo_datos[0]}-{tipo_datos[1]}-{tipo_datos[2]}]:")
         tipo_es_valido = validar_tipo(tipo_datos, input_tipo)
@@ -200,7 +201,7 @@ def actualizar_cliente(lista_cliente: list[dict], cliente: dict):
                 "ciudad": f"{cliente.get("ciudad")}"
             })
             print("cliente actualizado correctamente")
-            print(lista_cliente)
+            mostrar_info_completa_clientes(lista_cliente)
             break
 
 def validar_tipo(tipo_lista: list[str], input_tipo: str) -> bool:
@@ -240,13 +241,53 @@ def cliente_a_modificar(cliente: dict, tipo_es_valido: bool, tipo_datos: list[st
         print(f"el tipo {input_tipo} es incorrecto vuelva a intentar")
 
 def borrar_cliente(lista_clientes: list[dict]):
-    print(lista_clientes)
+    mostrar_info_completa_clientes(lista_clientes)
     input_id = validar_int("ingrese el numero id a borrar: ")
+
     for fila in range(len(lista_clientes)):
         if lista_clientes[fila].get("id") == input_id:
             lista_clientes.pop(fila)
             print("cliente borrado:")
             break
-        else:
-            print("id no encontrado:")
-    print(lista_clientes)
+        
+    mostrar_info_completa_clientes(lista_clientes)
+
+def do_bubble_sort(lista_clientes: list[dict], tipo: str, ord: str= 'ASC'):
+    """
+    tipo de ordenamiento bubble sort de forma DESC
+
+    arg: 
+        
+    return
+        None
+    """
+    tamanio_lista = len(lista_clientes)
+
+    for vueltas in range(tamanio_lista):
+
+        for primer_elemento in range(0, tamanio_lista - vueltas - 1):
+
+            siguiente_elemento = primer_elemento + 1
+
+            diccionario_pe = lista_clientes[primer_elemento]
+            diccionario_se = lista_clientes[siguiente_elemento]
+
+            if diccionario_pe.get(tipo) > diccionario_se.get(tipo) and ord == 'ASC' or\
+                diccionario_pe.get(tipo) < diccionario_se.get(tipo) and ord == 'DES':
+
+                lista_clientes[primer_elemento], lista_clientes[siguiente_elemento] =\
+                lista_clientes[siguiente_elemento],  lista_clientes[primer_elemento]
+    mostrar_info_completa_clientes(lista_clientes)
+
+def mostrar_info_completa_clientes(lista_clientes: list[dict]):
+    info = ''
+
+    for fila in range(len(lista_clientes)):
+        id = lista_clientes[fila].get("id")
+        apellido = lista_clientes[fila].get("apellido")
+        nombre = lista_clientes[fila].get("nombre")
+        ciudad = lista_clientes[fila].get("ciudad")
+
+        info += f'{id},{apellido},{nombre},{ciudad}' + "\n"
+
+    print(info)

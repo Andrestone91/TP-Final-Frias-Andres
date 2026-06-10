@@ -1,7 +1,9 @@
 from validaciones import validar_opcion
 import os
-from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos, mensaje_menu_clientes
-from logica import cargar_producto, modificar_producto, producto_a_borrar, cargar_cliente, modificar_cliente, borrar_cliente
+from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos,\
+      mensaje_menu_clientes, mensaje_menu_ver_clientes
+from logica import cargar_producto, modificar_producto, producto_a_borrar, cargar_cliente,\
+      modificar_cliente, borrar_cliente, do_bubble_sort
 
 def menu_area_productos(matriz_productos: list[list]):
     """
@@ -56,7 +58,10 @@ def menu_productos():
 def menu_area_clientes(lista_clientes: list[dict]):
     """
     menu para area de clientes
-    arg: 
+
+    arg:
+      lista_clientes (list[dict]): lista de clientes
+
     return
     """
     run = True
@@ -69,9 +74,35 @@ def menu_area_clientes(lista_clientes: list[dict]):
             case 2:
                 modificar_cliente(lista_clientes)
             case 3:
-                pass
+                menu_ver_clientes(lista_clientes)
             case 4:
                 borrar_cliente(lista_clientes)
+            case 5:
+                run = False
+
+def menu_ver_clientes(lista_clientes: list[dict]):
+    """
+    menu ver clientes
+
+    arg:
+      lista_clientes (list[dict]): lista de clientes
+
+    return
+    """
+    run = True
+
+    while run:
+        mensaje_menu_ver_clientes()
+        opcion_input = validar_opcion(1,5)
+        match opcion_input:
+            case 1:
+                do_bubble_sort(lista_clientes, "id")
+            case 2:
+                do_bubble_sort(lista_clientes, "apellido")
+            case 3:
+                do_bubble_sort(lista_clientes, "ciudad")
+            case 4:
+                do_bubble_sort(lista_clientes, "apellido")
             case 5:
                 run = False
 

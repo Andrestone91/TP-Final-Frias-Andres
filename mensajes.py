@@ -78,3 +78,22 @@ def mensaje_menu_clientes():
         5 Salir (Vuelve al Menú Principal)
     """
     print(mensaje)
+
+def mensaje_menu_ver_clientes():
+    """
+    muestra las opciones disponibles para ver clientes
+
+    arg: 
+        
+    return:
+    
+    """
+    mensaje =\
+    """
+         1 Ordenar por ID ASC 
+         2 Ordenar por Apellido ASC 
+         3 Ordenar por Ciudad ASC 
+         4 Filtrar por Ciudad (y ordenar por Apellido ASC)
+         5 volver
+    """
+    print(mensaje)
