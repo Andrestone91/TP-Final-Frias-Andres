@@ -1,9 +1,11 @@
 from validaciones import validar_opcion
 import os
 from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos,\
-      mensaje_menu_clientes, mensaje_menu_ver_clientes
-from logica import cargar_producto, modificar_producto, producto_a_borrar, cargar_cliente,\
-      modificar_cliente, borrar_cliente, do_bubble_sort
+      mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas
+from logica import cargar_producto, modificar_producto, producto_a_borrar,\
+      do_bubble_sort
+from clientes import cargar_cliente, modificar_cliente, borrar_cliente
+from ventas import cargar_venta
 
 def menu_area_productos(matriz_productos: list[list]):
     """
@@ -90,19 +92,44 @@ def menu_ver_clientes(lista_clientes: list[dict]):
     return
     """
     run = True
-
+    nombre_lista = "clientes"
     while run:
         mensaje_menu_ver_clientes()
         opcion_input = validar_opcion(1,5)
         match opcion_input:
             case 1:
-                do_bubble_sort(lista_clientes, "id")
+                do_bubble_sort(lista_clientes, "id", nombre_lista)
             case 2:
-                do_bubble_sort(lista_clientes, "apellido")
+                do_bubble_sort(lista_clientes, "apellido", nombre_lista)
             case 3:
-                do_bubble_sort(lista_clientes, "ciudad")
+                do_bubble_sort(lista_clientes, "ciudad", nombre_lista)
             case 4:
-                do_bubble_sort(lista_clientes, "apellido")
+                do_bubble_sort(lista_clientes, "apellido", nombre_lista)
+            case 5:
+                run = False
+
+def menu_area_ventas(lista_ventas: list[dict], lista_detalle_ventas: list[dict]):
+    """
+    menu para area de ventas
+
+    arg:
+      lista_ventas (list[dict]): lista de ventas
+
+    return
+    """
+    run = True
+    while run:
+        mensaje_menu_ventas()
+        opcion_input = validar_opcion(1,5)
+        match opcion_input:
+            case 1:
+                cargar_venta(lista_detalle_ventas)
+            case 2:
+                pass
+            case 3:
+                pass
+            case 4:
+                pass
             case 5:
                 run = False
 
@@ -118,7 +145,7 @@ def manejo_lista(lista) -> list[dict]:
     """
     return lista
 
-def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
+def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ventas: list[dict], lista_detalle_ventas: list[dict]):
     """
     funcion principal de la aplicacion
 
@@ -134,7 +161,7 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
 
     while run:
         mensaje_menu_principal()
-        opcion_input = validar_opcion(1,3)
+        opcion_input = validar_opcion(1,4)
 
         match opcion_input:
             case 1:
@@ -142,6 +169,8 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict]):
             case 2:
                 menu_area_clientes(lista_clientes_aux)
             case 3:
+                menu_area_ventas(lista_ventas, lista_detalle_ventas)
+            case 4:
                 run = False
                 print("cerrando programa...")
 

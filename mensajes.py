@@ -12,7 +12,8 @@ def mensaje_menu_principal():
         MENU PRINCIPAL
 
         1. Área Productos 
-        2. Área Clientes 
+        2. Área Clientes
+        3. Área Ventas
         3. Salir del Sistema
     """
     print(mensaje)
@@ -95,5 +96,26 @@ def mensaje_menu_ver_clientes():
          3 Ordenar por Ciudad ASC 
          4 Filtrar por Ciudad (y ordenar por Apellido ASC)
          5 volver
+    """
+    print(mensaje)
+
+def mensaje_menu_ventas():
+    """
+    muestra las opciones disponibles del menu area Ventas
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+        MENU AREA VENTAS
+         	
+        1 Cargar Ventas (permitir agregar productos a la venta) 
+        2 Modificar Venta 
+        3 Ver Ventas
+        4 Borrar Venta 
+        5 Salir (Vuelve al Menú Principal)
     """
     print(mensaje)
