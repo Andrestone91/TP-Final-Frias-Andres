@@ -14,7 +14,7 @@ def mensaje_menu_principal():
         1. Área Productos 
         2. Área Clientes
         3. Área Ventas
-        3. Salir del Sistema
+        4. Salir del Sistema
     """
     print(mensaje)
 
@@ -91,11 +91,12 @@ def mensaje_menu_ver_clientes():
     """
     mensaje =\
     """
-         1 Ordenar por ID ASC 
-         2 Ordenar por Apellido ASC 
-         3 Ordenar por Ciudad ASC 
-         4 Filtrar por Ciudad (y ordenar por Apellido ASC)
-         5 volver
+        MENU AREA CLIENTES
+        1 Ordenar por ID ASC 
+        2 Ordenar por Apellido ASC 
+        3 Ordenar por Ciudad ASC 
+        4 Filtrar por Ciudad (y ordenar por Apellido ASC)
+        5 volver
     """
     print(mensaje)
 
@@ -117,5 +118,24 @@ def mensaje_menu_ventas():
         3 Ver Ventas
         4 Borrar Venta 
         5 Salir (Vuelve al Menú Principal)
+    """
+    print(mensaje)
+
+def mensaje_menu_ver_ventas():
+    """
+    muestra las opciones disponibles para ver ventas
+
+    arg: 
+        
+    return:
+    
+    """
+    mensaje =\
+    """
+        MENU VER VENTAS
+
+        1 Ordenar por ID DES 
+        2 Ordenar por monto DES
+        3 Volver (area ventas)
     """
     print(mensaje)

@@ -1,4 +1,4 @@
-producto: list[list]=[
+productos: list[list]=[
         [1, "Yerba", 25, 4500.0],
         [2, "Azúcar", 40, 1200.0],
         [3, "Arroz", 30, 2100.0],
@@ -64,27 +64,7 @@ ventas: list[dict] = [
     {
         "id": 5,
         "id_cliente": 4
-    },
-    {
-        "id": 6,
-        "id_cliente": 1
-    },
-    {
-        "id": 7,
-        "id_cliente": 4
-    },
-    {
-        "id": 8,
-        "id_cliente": 2
-    },
-    {
-        "id": 9,
-        "id_cliente": 5
-    },
-    {
-        "id": 10,
-        "id_cliente": 1
-    },
+    }
 ]
 
 detalle_ventas: list[dict] = [
@@ -120,31 +100,31 @@ detalle_ventas: list[dict] = [
     },
     {
         "id": 6,
-        "id_venta": 6,
+        "id_venta": 2,
         "id_producto": 8,
         "cantidad": 5
     },
     {
         "id": 7,
-        "id_venta": 7,
+        "id_venta": 3,
         "id_producto": 4,
         "cantidad": 2
     },
     {
         "id": 8,
-        "id_venta": 8,
+        "id_venta": 5,
         "id_producto": 6,
         "cantidad": 1
     },
     {
         "id": 9,
-        "id_venta": 9,
+        "id_venta": 4,
         "id_producto": 6,
         "cantidad": 3
     },
     {
         "id": 10,
-        "id_venta": 10,
+        "id_venta": 2,
         "id_producto": 6,
         "cantidad": 2
     },

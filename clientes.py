@@ -53,7 +53,7 @@ def cargar_cliente(lista_clientes: list[dict]):
 
 def obtener_cliente_por_dato(lista_clientes: list[dict], id: int) -> dict:
     """
-    obtiene un cliente en formato diccionario
+    obtiene un cliente en formato diccionario mediante su ID
 
     arg: 
         lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario
