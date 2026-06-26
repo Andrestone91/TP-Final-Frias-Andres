@@ -1,13 +1,14 @@
 import os
 from validaciones import validar_opcion
 from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos,\
-      mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas
+      mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas, mensaje_menu, imprimir_menu,\
+          mensaje_menu_salir
 from logica import cargar_producto, modificar_producto, producto_a_borrar,\
       do_bubble_sort
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente
 from ventas import cargar_venta, mostrar_info_completa_ventas
 
-def menu_area_productos(matriz_productos: list[list]):
+def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
     menu para area de productos
 
@@ -15,23 +16,27 @@ def menu_area_productos(matriz_productos: list[list]):
         
     return
     """
-    run = True
+    if usuario:
+        run = True
 
-    while run:
-        mensaje_menu_area_productos()
-        opcion_input = validar_opcion(1,5)
+        while run:
+            mensaje_menu_area_productos()
+            opcion_input = validar_opcion(1,5)
+       
+            match opcion_input:
+                case 1:
+                    cargar_producto(matriz_productos)
+                case 2:
+                    modificar_producto(matriz_productos)
+                case 3:
+                    menu_productos()
+                case 4:
+                    producto_a_borrar(matriz_productos)
+                case 5:
+                    run = False
+    else:
+        print('Primero tiene que loguear en el sistema')
 
-        match opcion_input:
-            case 1:
-                cargar_producto(matriz_productos)
-            case 2:
-                modificar_producto(matriz_productos)
-            case 3:
-                menu_productos()
-            case 4:
-                producto_a_borrar(matriz_productos)
-            case 5:
-                run = False
 
 def menu_productos():
     """
@@ -57,7 +62,7 @@ def menu_productos():
             case 4:
                 run = False
 
-def menu_area_clientes(lista_clientes: list[dict]):
+def menu_area_clientes(lista_clientes: list[dict], usuario: dict):
     """
     menu para area de clientes
 
@@ -66,21 +71,24 @@ def menu_area_clientes(lista_clientes: list[dict]):
 
     return
     """
-    run = True
-    while run:
-        mensaje_menu_clientes()
-        opcion_input = validar_opcion(1,5)
-        match opcion_input:
-            case 1:
-                cargar_cliente(lista_clientes)
-            case 2:
-                modificar_cliente(lista_clientes)
-            case 3:
-                menu_ver_clientes(lista_clientes)
-            case 4:
-                borrar_cliente(lista_clientes)
-            case 5:
-                run = False
+    if usuario:
+        run = True
+        while run:
+            mensaje_menu_clientes()
+            opcion_input = validar_opcion(1,5)
+            match opcion_input:
+                case 1:
+                    cargar_cliente(lista_clientes)
+                case 2:
+                    modificar_cliente(lista_clientes)
+                case 3:
+                    menu_ver_clientes(lista_clientes)
+                case 4:
+                    borrar_cliente(lista_clientes)
+                case 5:
+                    run = False
+    else:
+        print('Primero tiene que loguear en el sistema')
 
 def menu_ver_clientes(lista_clientes: list[dict]):
     """
@@ -109,7 +117,7 @@ def menu_ver_clientes(lista_clientes: list[dict]):
                 run = False
 
 def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict], 
-                    lista_detalle_ventas: list[dict]):
+                    lista_detalle_ventas: list[dict], usuario: dict):
     """
     menu para area de ventas
 
@@ -118,22 +126,25 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
 
     return
     """
-    run = True
-    while run:
-        mensaje_menu_ventas()
-        opcion_input = validar_opcion(1,5)
-        match opcion_input:
-            case 1:
-                # cargar_venta(lista_detalle_ventas)
-                pass
-            case 2:
-                pass
-            case 3:
-                menu_ver_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
-            case 4:
-                pass
-            case 5:
-                run = False
+    if usuario:
+        run = True
+        while run:
+            mensaje_menu_ventas()
+            opcion_input = validar_opcion(1,5)
+            match opcion_input:
+                case 1:
+                    # cargar_venta(lista_detalle_ventas)
+                    pass
+                case 2:
+                    pass
+                case 3:
+                    menu_ver_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
+                case 4:
+                    pass
+                case 5:
+                    run = False
+    else:
+        print('Primero tiene que loguear en el sistema')
 
 def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict], 
                     lista_detalle_ventas: list[dict]):
@@ -175,27 +186,46 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
     funcion principal de la aplicacion
 
     arg: 
-        matriz_productos (list[list]): la matriz de productos
-        
-    return:
+        matriz_productos (list[list]): matriz de productos
+        lista_clientes (list[dict]): lista de clientes
+        lista_ventas (list[dict]): lista de ventas
+        lista_detalle_ventas (list[dict]): lista detalle de venta
 
+    return:
+            
     """
     lista_clientes_aux = manejo_lista(lista_clientes)
 
+    usuario = {}
+    usuario = {
+        "id": 1,
+        "username": "andre",
+        "password": "1234",
+        "tipo": "vendedor",
+        "esta_online": True
+    }
+    
     run = True
-
     while run:
-        mensaje_menu_principal()
-        opcion_input = validar_opcion(1,4)
+        menu = mensaje_menu(usuario)
+        menu += mensaje_menu_salir()
+        imprimir_menu(menu)
+        opcion_input = validar_opcion(0,6)
 
         match opcion_input:
+            case 0:
+                print("login")
             case 1:
-                menu_area_productos(matriz_productos)
+                menu_area_productos(matriz_productos, usuario)
             case 2:
-                menu_area_clientes(lista_clientes_aux)
+                menu_area_clientes(lista_clientes_aux, usuario)
             case 3:
-                menu_area_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
+                menu_area_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas, usuario)
             case 4:
+                pass
+            case 5:
+                pass
+            case 6:
                 run = False
                 print("cerrando programa...")
 

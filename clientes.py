@@ -77,7 +77,7 @@ def modificar_cliente(lista_clientes: list[dict]):
         
     return:
     """
-
+    mostrar_info_completa(lista_clientes, "clientes")
     tipo_datos: list[str] = ["apellido", "nombre", "ciudad"]
 
     input_id = validar_int(f"ingrese el ID del cliente a modificar: ")
@@ -91,7 +91,7 @@ def modificar_cliente(lista_clientes: list[dict]):
         input_tipo = validar_str(f"ingrese el tipo de dato a modificar [{tipo_datos[0]}-{tipo_datos[1]}-{tipo_datos[2]}]:")
         tipo_es_valido = validar_tipo(tipo_datos, input_tipo)
 
-        cliente_a_modificar(cliente, tipo_es_valido, tipo_datos, input_tipo, lista_clientes)
+        actualizar_un_dato_cliente(cliente, tipo_es_valido, tipo_datos, input_tipo, lista_clientes)
     else:
         print("no se encontro el cliente seleccionado")
     
@@ -139,7 +139,7 @@ def validar_tipo(tipo_lista: list[str], input_tipo: str) -> bool:
     else:
         return False
     
-def cliente_a_modificar(cliente: dict, tipo_es_valido: bool, tipo_datos: list[str], input_tipo: str, lista_clientes: list[dict]):
+def actualizar_un_dato_cliente(cliente: dict, tipo_es_valido: bool, tipo_datos: list[str], input_tipo: str, lista_clientes: list[dict]):
     """
     se modifica el cliente seleccionado
 

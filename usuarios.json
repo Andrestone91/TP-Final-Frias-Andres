@@ -1,0 +1,11 @@
+{
+    "usuarios": [
+        {
+            "id": 1,
+            "username": "andre",
+            "password": "1234",
+            "tipo": "vendedor",
+            "esta_online": true
+        }
+    ]
+}
