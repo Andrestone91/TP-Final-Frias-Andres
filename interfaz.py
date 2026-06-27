@@ -7,6 +7,7 @@ from logica import cargar_producto, modificar_producto, producto_a_borrar,\
       do_bubble_sort
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente
 from ventas import cargar_venta, mostrar_info_completa_ventas
+from login import iniciar_sesion
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
@@ -197,13 +198,13 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
     lista_clientes_aux = manejo_lista(lista_clientes)
 
     usuario = {}
-    usuario = {
-        "id": 1,
-        "username": "andre",
-        "password": "1234",
-        "tipo": "vendedor",
-        "esta_online": True
-    }
+    # usuario = {
+    #     "id": 1,
+    #     "username": "andre",
+    #     "password": "1234",
+    #     "tipo": "vendedor",
+    #     "esta_online": True
+    # }
     
     run = True
     while run:
@@ -214,7 +215,10 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
 
         match opcion_input:
             case 0:
-                print("login")
+                if not usuario:
+                     usuario = iniciar_sesion(usuario)
+                else:
+                    print("ya tenes una sesion iniciada")
             case 1:
                 menu_area_productos(matriz_productos, usuario)
             case 2:

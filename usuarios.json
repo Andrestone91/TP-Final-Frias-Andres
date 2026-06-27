@@ -6,6 +6,13 @@
             "password": "1234",
             "tipo": "vendedor",
             "esta_online": true
+        },
+        {
+            "id": 2,
+            "username": "otro",
+            "password": "1234",
+            "tipo": "vendedor",
+            "esta_online": true
         }
     ]
 }

@@ -1,4 +1,6 @@
 from validaciones import validar_str, validar_int, validar_float
+import json
+from variables import  CODIFICACION
 
 def crear_matriz(filas: int) -> list[list]:
     matriz = []
@@ -149,3 +151,10 @@ def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: st
                 lista_dict[primer_elemento], lista_dict[siguiente_elemento] =\
                 lista_dict[siguiente_elemento],  lista_dict[primer_elemento]
     mostrar_info_completa(lista_dict,  nombre_lista)
+
+def leer_json(ruta):
+    informacion = {}
+    with open (ruta, 'r', encoding=CODIFICACION) as json_file:
+        informacion = json.load(json_file)
+        print('[SYSTEM] -- Informacion extraida --')
+    return informacion

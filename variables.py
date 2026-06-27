@@ -1,0 +1,2 @@
+ARCHIVO_USUARIOS = 'usuarios.json'
+CODIFICACION = 'UTF-8'
