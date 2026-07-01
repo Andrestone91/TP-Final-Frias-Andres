@@ -198,13 +198,13 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
     lista_clientes_aux = manejo_lista(lista_clientes)
 
     usuario = {}
-    # usuario = {
-    #     "id": 1,
-    #     "username": "andre",
-    #     "password": "1234",
-    #     "tipo": "vendedor",
-    #     "esta_online": True
-    # }
+    usuario = {
+        "id": 1,
+        "username": "andre",
+        "password": "1234",
+        "tipo": "vendedor",
+        "esta_online": True
+    }
     
     run = True
     while run:
