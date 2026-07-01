@@ -121,6 +121,18 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
             info += f'{id},{apellido},{nombre},{ciudad}' + "\n"
 
         print(info)
+
+    elif nombre_lista == "lista_detalle_final":
+        for fila in range(len(lista_dict)):
+            id_venta = lista_dict[fila].get("id_venta")
+            id_cliente = lista_dict[fila].get("id_cliente")
+            apellido = lista_dict[fila].get("apellido")
+            nombre = lista_dict[fila].get("nombre")
+            monto_total = lista_dict[fila].get("monto_total")
+
+            info += f"{id_venta},{id_cliente},{apellido},{nombre},{monto_total}\n"
+
+        print(info)
     else:
         print("lista no reconocida")
 

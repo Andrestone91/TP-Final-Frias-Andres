@@ -1,2 +1,5 @@
 ARCHIVO_USUARIOS = 'usuarios.json'
+ARCHIVO_PRODUCTOS = 'productos.csv'
+ARCHIVO_CLIENTES = 'clientes.csv'
+ARCHIVO_VENTAS = 'ventas.csv'
 CODIFICACION = 'UTF-8'

@@ -14,6 +14,8 @@ def menu_area_productos(matriz_productos: list[list], usuario: dict):
     menu para area de productos
 
     arg: 
+        matriz_productos (list[list]): contiene la matriz de productos
+        usuarios (dict): el usuario con el que se inicio sesion
         
     return
     """
@@ -69,7 +71,7 @@ def menu_area_clientes(lista_clientes: list[dict], usuario: dict):
 
     arg:
       lista_clientes (list[dict]): lista de clientes
-
+      usuario (dict): usuarios en diccionario
     return
     """
     if usuario:
@@ -123,8 +125,12 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
     menu para area de ventas
 
     arg:
-      lista_ventas (list[dict]): lista de ventas
-
+      matriz_productos (list[list]): productos en matriz
+      lista_clientes list[dict]: clientes en diccionario
+      lista_ventas (list[dict]): ventas en diccionario
+      lista_detalle_ventas (list[dict]):  detalle ventas en diccionario
+      usuario (dict): usuario en json
+      
     return
     """
     if usuario:
@@ -153,7 +159,10 @@ def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], li
     menu ver ventas
 
     arg:
-      lista_detalle_ventas (list[dict]): lista de detalle ventas
+      matriz_productos (list[list]): productos en matriz
+      lista_clientes list[dict]: clientes en diccionario
+      lista_ventas (list[dict]): ventas en diccionario
+      lista_detalle_ventas (list[dict]):  detalle ventas en diccionario
 
     return
     """

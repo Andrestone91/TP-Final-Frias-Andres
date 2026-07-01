@@ -111,9 +111,9 @@ def actualizar_cliente(lista_cliente: list[dict], cliente: dict):
         if lista_cliente[fila].get("id") == cliente.get("id"):
             lista_cliente[fila].update({
                 "id": cliente.get("id"),
-                "apellido": f"{cliente.get("apellido")}",
-                "nombre": f"{cliente.get("nombre")}",
-                "ciudad": f"{cliente.get("ciudad")}"
+                "apellido": cliente.get("apellido"),
+                "nombre": cliente.get("nombre"),
+                "ciudad": cliente.get("ciudad")
             })
             print("cliente actualizado correctamente")
             mostrar_info_completa(lista_cliente, "clientes")

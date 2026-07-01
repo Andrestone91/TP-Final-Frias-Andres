@@ -12,16 +12,7 @@ from logica import do_bubble_sort
 # donde coincidan sus ids) 
 
 def cargar_venta(lista_detalle_ventas: list[dict]):
-    lista_detalle_ventas = obtener_detalle_ventas_de_una_venta(lista_detalle_ventas)
-    print(lista_detalle_ventas)
-    
-def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int) -> list[dict]:
-    detalle_ventas = []
-
-    for detalle in lista_detalle_ventas:
-        if detalle.get("id_venta") == id:
-            detalle_ventas.append(detalle)
-    return detalle_ventas
+    pass
 
 def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
     ids_set = set()
@@ -72,7 +63,7 @@ def obtener_monto_total(id_venta: int, lista_detalle_ventas: list[dict], lista_d
     return total
     
 def armar_dic(venta: dict, cliente: dict, id_venta, monto_total: float):
-    info = f"{id_venta},{venta.get("id_cliente")},{cliente.get("apellido")},{cliente.get("nombre")},{monto_total}" + "\n"
+    info = f"{id_venta},{venta.get('id_cliente')},{cliente.get('apellido')},{cliente.get('nombre')},{monto_total}\n"
     return info
 
 def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict],
@@ -81,16 +72,21 @@ def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: l
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
 
     lista_ids_unicos_detalle_ventas = obtener_ids_unicos(lista_detalle_ventas, "id_venta")
+    lista_detalle_final: list[dict] = []
 
-    info = ""
     for id_venta in lista_ids_unicos_detalle_ventas:
         venta = filtrar_info_dic(lista_ventas, "id", id_venta)
         cliente = filtrar_info_dic(lista_clientes, "id", venta.get("id_cliente"))
+        
         monto_total = obtener_monto_total(id_venta, lista_detalle_ventas, dict_productos)
-        # detalle_venta = obtener_detalle_ventas_de_una_venta(lista_detalle_ventas, id_venta)
-        # lista_detalle_final_ord = []
-        # do_bubble_sort(lista_detalle_final_ord, "id", "lista_detalle_final_ord", "DEC")
-        detalle_venta_final = armar_dic(venta, cliente, id_venta, monto_total)
-        info += detalle_venta_final
-    print(info)
+
+        lista_detalle_final.append({
+            "id_venta": id_venta,
+            "id_cliente": venta.get("id_cliente"),
+            "apellido": cliente.get("apellido"),
+            "nombre":cliente.get("nombre"),
+            "monto_total": monto_total
+        })
+
+    do_bubble_sort(lista_detalle_final, "id_venta", "lista_detalle_final", "DES")
         
