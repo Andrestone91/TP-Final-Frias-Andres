@@ -170,3 +170,69 @@ def leer_json(ruta):
         informacion = json.load(json_file)
         print('[SYSTEM] -- Informacion extraida --')
     return informacion
+
+def leer_csv(ruta: str):
+    with open(ruta, "r", encoding=CODIFICACION) as file:
+        contenido = file.readlines()
+        return contenido
+    
+def parsear_dataset_lidict(datos: list[str]) -> list[dict]:
+    str_claves_limpias = datos.pop(0).replace('\n', '')
+    claves = split_texto(str_claves_limpias, ',')
+    lista_dict_heroes = []
+
+    for heroe in datos:
+        heroe = heroe.replace('\n', '')
+        datos_heroe = split_texto(heroe, ',')
+        heroe_dict = {}
+
+        for indice_clave in range(len(claves)):
+            heroe_dict.update(
+                {claves[indice_clave] : datos_heroe[indice_clave]}
+            )
+        lista_dict_heroes.append(heroe_dict)
+    return lista_dict_heroes
+
+def split_texto(texto: str, separador: str) -> list[str]:
+    lista_str = []
+    palabra = ''
+
+    for caracter in texto:
+        if caracter != separador:
+            palabra += caracter
+        else:
+            if agregar_si_no_vacio(lista_str, palabra):
+                palabra = ''
+    
+    agregar_si_no_vacio(lista_str, palabra)
+    return lista_str
+
+def agregar_si_no_vacio(lista_palabras: list[str], palabra: str) -> bool:
+    hubo_cambio = False
+    if palabra != '':
+        lista_palabras.append(palabra)
+        hubo_cambio = True
+    return hubo_cambio
+
+def parsear_dataset_producto_matriz(datos: list[str]) -> list[list]:
+    mi_matriz = []
+    for linea in datos:
+        if datos.index(linea) == 0:
+            continue
+        linea = linea.replace('\n', '')
+        datos_linea = split_texto(linea, ',')
+
+        datos_linea[0] = parsear_str_a_int(datos_linea[0]) 
+        datos_linea[2] = parsear_str_a_int(datos_linea[2]) 
+        datos_linea[3] = parsear_str_a_float(datos_linea[3]) 
+        
+        mi_matriz.append(datos_linea)
+    return mi_matriz
+
+def parsear_str_a_int(texto: str) -> int:
+    numero = int(texto)
+    return numero
+
+def parsear_str_a_float(texto: str) -> float:
+    valor = float(texto)
+    return valor

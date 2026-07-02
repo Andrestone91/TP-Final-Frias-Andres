@@ -1,15 +1,4 @@
 from logica import do_bubble_sort
-# id_venta,id_cliente,apellido,nombre,monto_venta
-
-# Id_venta: debe extraerse del dataset detalle_venta 
-
-# Id_cliente: debe extraerse del dataset ventas (donde coincida el ID de la venta) 
-
-# apellido y nombre: debe extraerse del dataset clientes (segun su ID) 
-
-# monto_venta: debe extraerse de la suma de cantidad de productos * precio unitario 
-# (para esto, la cantidad de productos se obtendra desde el dataset detalle_venta y el precio unitario del dataset productos, 
-# donde coincidan sus ids) 
 
 def cargar_venta(lista_detalle_ventas: list[dict]):
     pass
