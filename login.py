@@ -1,5 +1,5 @@
 from variables import ARCHIVO_USUARIOS
-from logica import leer_json
+from archivos import leer_json
 
 def iniciar_sesion(usuario: dict):
     """

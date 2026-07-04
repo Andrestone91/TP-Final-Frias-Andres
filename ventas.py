@@ -1,7 +1,16 @@
-from logica import do_bubble_sort
+from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic
+from validaciones import validar_int
 
 def cargar_venta(lista_detalle_ventas: list[dict]):
     pass
+
+def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int) -> list[dict]:
+    detalle_ventas = []
+
+    for detalle in lista_detalle_ventas:
+        if detalle.get("id_venta") == id:
+            detalle_ventas.append(detalle)
+    return detalle_ventas
 
 def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
     ids_set = set()
@@ -12,15 +21,6 @@ def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
     lista_ids_unicos = list(ids_set)
 
     return lista_ids_unicos
-
-def filtrar_info_dic(lista: list[dict], clave: str, id: int):
-    item_dicccionario = {}
-    for item in lista:
-        if item.get(clave) == id:
-            item_dicccionario.update(item)
-            break
-
-    return item_dicccionario
 
 def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict]:
     lista_productos = []
@@ -79,3 +79,29 @@ def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: l
 
     do_bubble_sort(lista_detalle_final, "id_venta", "lista_detalle_final", "DES")
         
+def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict]):
+    """
+    borra una venta
+
+    arg: 
+        lista_clientes (list[dict]): contiene la lista clientes en formato diccionario.
+        lista_detalle_ventas (list[dict]): contiene la lista detalle de venta en formato diccionario
+        
+    return:
+    """
+    mostrar_info_completa(lista_ventas, "ventas")
+    input_id = validar_int("ingrese el numero id a borrar: ")
+
+    for fila_venta in range(len(lista_ventas)):
+        if lista_ventas[fila_venta].get("id") == input_id:
+            lista_detalle_venta = obtener_detalle_ventas_de_una_venta(lista_detalle_ventas, input_id)
+
+            for fila_detalle in lista_detalle_venta:
+                print(fila_detalle)
+                # lista_detalle_venta.pop(fila_detalle)
+            print(lista_ventas[fila_venta])
+            # lista_ventas.pop(fila_venta)
+            print("venta borrada:")
+            break
+        
+    # mostrar_info_completa(lista_ventas, "ventas")

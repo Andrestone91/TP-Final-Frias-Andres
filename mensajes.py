@@ -1,4 +1,4 @@
-def mensaje_menu_principal():
+def mensaje_menu_principal(usuario: dict):
     """
     muestra las opciones disponibles del menu principal
 
@@ -12,6 +12,9 @@ def mensaje_menu_principal():
     2. Área Clientes
     3. Área Ventas
     """
+    if usuario.get("tipo") == "admin":
+        mensaje += "4. Área Usuarios" + "\n    "
+
     return mensaje
 
 def mensaje_menu_area_productos():
@@ -136,6 +139,27 @@ def mensaje_menu_ver_ventas():
     """
     print(mensaje)
 
+def mensaje_menu_usuarios():
+    """
+    muestra las opciones disponibles del menu area usuarios
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+    MENU AREA USUARIOS
+     	
+    1 Crear usuario 
+    2 Modificar Usuarios 
+    3 Ver Usuarios 
+    4 Borrar Usuarios 
+    5 Salir 
+    """
+    print(mensaje)
+
 def mensaje_menu(usuario: dict):
     """
     muestra las opciones disponibles para ver ventas
@@ -152,7 +176,7 @@ def mensaje_menu(usuario: dict):
     0. login
     """
     if usuario:
-        mensaje += mensaje_menu_principal()
+        mensaje += mensaje_menu_principal(usuario)
     return mensaje
 
 def mensaje_menu_salir() -> str:

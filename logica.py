@@ -1,6 +1,4 @@
 from validaciones import validar_str, validar_int, validar_float
-import json
-from variables import  CODIFICACION
 
 def crear_matriz(filas: int) -> list[list]:
     matriz = []
@@ -133,6 +131,28 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
             info += f"{id_venta},{id_cliente},{apellido},{nombre},{monto_total}\n"
 
         print(info)
+
+    elif nombre_lista == "ventas":
+        for fila in range(len(lista_dict)):
+            id = lista_dict[fila].get("id")
+            id_cliente = lista_dict[fila].get("id_cliente")
+
+            info += f"{id},{id_cliente}\n"
+
+        print(info)
+
+    elif nombre_lista == "usuarios":
+        for fila in range(len(lista_dict)):
+            id = lista_dict[fila].get("id")
+            username = lista_dict[fila].get("username")
+            password = lista_dict[fila].get("password")
+            tipo = lista_dict[fila].get("tipo")
+            esta_online = lista_dict[fila].get("esta_online")
+
+            info += f"{id},{username},{password},{tipo},{esta_online}\n"
+
+        print(info)
+
     else:
         print("lista no reconocida")
 
@@ -164,17 +184,30 @@ def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: st
                 lista_dict[siguiente_elemento],  lista_dict[primer_elemento]
     mostrar_info_completa(lista_dict,  nombre_lista)
 
-def leer_json(ruta):
-    informacion = {}
-    with open (ruta, 'r', encoding=CODIFICACION) as json_file:
-        informacion = json.load(json_file)
-        print('[SYSTEM] -- Informacion extraida --')
-    return informacion
+def convertir_valor(valor, tipo: str):
+    if tipo == "int":
+        return parsear_str_a_int(valor)
+    if tipo == "float":
+        return parsear_str_a_float(valor)
+    return valor
 
-def leer_csv(ruta: str):
-    with open(ruta, "r", encoding=CODIFICACION) as file:
-        contenido = file.readlines()
-        return contenido
+def parsear_dict_valor(lista_keys: list, lista_tipos: list, dict_lista:list[dict]):
+    for dict_ele in dict_lista:
+        for key, tipo in zip(lista_keys, lista_tipos):
+            if key in dict_ele:
+                dict_ele[key] = tipo(dict_ele[key])
+
+    return dict_lista
+# def parsear_dict_valor(lista: list[dict], keys: list[str], posiciones: list[int], tipo: str):
+#     for fila in lista:
+#         for key, posicion in zip(keys, posiciones):
+#             if key in fila:
+#                     fila[key] = convertir_valor(fila[key], tipo)
+#             else:
+#                 if 0 <= posicion < len(fila):
+#                     fila[posicion] = convertir_valor(fila[posicion], tipo)
+
+#     return lista
     
 def parsear_dataset_lidict(datos: list[str]) -> list[dict]:
     str_claves_limpias = datos.pop(0).replace('\n', '')
@@ -236,3 +269,12 @@ def parsear_str_a_int(texto: str) -> int:
 def parsear_str_a_float(texto: str) -> float:
     valor = float(texto)
     return valor
+
+def filtrar_info_dic(lista: list[dict], clave: str, id: int):
+    item_dicccionario = {}
+    for item in lista:
+        if item.get(clave) == id:
+            item_dicccionario.update(item)
+            break
+
+    return item_dicccionario

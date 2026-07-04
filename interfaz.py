@@ -1,13 +1,16 @@
 import os
 from validaciones import validar_opcion
-from mensajes import mensaje_menu_principal, mensaje_menu_area_productos, mensaje_menu_productos,\
+from mensajes import  mensaje_menu_area_productos, mensaje_menu_productos,\
       mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas, mensaje_menu, imprimir_menu,\
-          mensaje_menu_salir
+          mensaje_menu_salir, mensaje_menu_usuarios
 from logica import cargar_producto, modificar_producto, producto_a_borrar,\
       do_bubble_sort
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente
-from ventas import cargar_venta, mostrar_info_completa_ventas
+from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
+from archivos import leer_json
+from variables import ARCHIVO_CLIENTES, ARCHIVO_PRODUCTOS, ARCHIVO_USUARIOS, ARCHIVO_VENTAS, ARCHIVO_DETALLE_VENTA
+from usuarios import mostrar_usuarios
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
@@ -143,15 +146,30 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
                     # cargar_venta(lista_detalle_ventas)
                     pass
                 case 2:
+                    # 2 Modificar Ventas
                     pass
                 case 3:
                     menu_ver_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
                 case 4:
-                    pass
+                    borrar_venta(lista_ventas, lista_detalle_ventas)
                 case 5:
                     run = False
     else:
         print('Primero tiene que loguear en el sistema')
+
+def menu_modificar_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict], 
+                    lista_detalle_ventas: list[dict]):
+    """
+    menu modificar venta
+
+    arg:
+      matriz_productos (list[list]): productos en matriz
+      lista_clientes list[dict]: clientes en diccionario
+      lista_ventas (list[dict]): ventas en diccionario
+      lista_detalle_ventas (list[dict]):  detalle ventas en diccionario
+
+    return
+    """
 
 def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict], 
                     lista_detalle_ventas: list[dict]):
@@ -167,7 +185,6 @@ def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], li
     return
     """
     run = True
-    nombre_lista = "ventas"
     while run:
         mensaje_menu_ver_ventas()
         opcion_input = validar_opcion(1,3)
@@ -178,6 +195,38 @@ def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], li
                 pass
             case 3:
                 run = False
+
+def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
+    """
+    menu para area de usuarios
+
+    arg:
+      usuario (dict): usuario en json
+      
+    return
+    """
+    if usuario.get("tipo") == "admin":
+        run = True
+        while run:
+            mensaje_menu_usuarios()
+            opcion_input = validar_opcion(1,5)
+            match opcion_input:
+                case 1:
+                    # Crear usuario
+                    pass
+                case 2:
+                    # Modificar Usuarios
+                    pass
+                case 3:
+                    mostrar_usuarios(lista_usuarios)
+                    pass
+                case 4:
+                    # Borrar Usuarios 
+                    pass
+                case 5:
+                    run = False
+    else:
+        print('usuario no logueado o no permitido')
 
 def manejo_lista(lista) -> list[dict]: 
     """
@@ -202,16 +251,17 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
         lista_detalle_ventas (list[dict]): lista detalle de venta
 
     return:
-            
     """
+    lista_usuarios: list[dict] = leer_json(ARCHIVO_USUARIOS)
+
     lista_clientes_aux = manejo_lista(lista_clientes)
 
     usuario = {}
-    usuario = {
+    usuario: dict = {
         "id": 1,
         "username": "andre",
         "password": "1234",
-        "tipo": "vendedor",
+        "tipo": "admin",
         "esta_online": True
     }
     
@@ -235,7 +285,7 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
             case 3:
                 menu_area_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas, usuario)
             case 4:
-                pass
+                menu_area_usuarios(lista_usuarios.get("usuarios"), usuario)
             case 5:
                 pass
             case 6:

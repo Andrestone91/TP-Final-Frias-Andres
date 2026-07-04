@@ -4,7 +4,7 @@
             "id": 1,
             "username": "andre",
             "password": "1234",
-            "tipo": "vendedor",
+            "tipo": "admin",
             "esta_online": true
         },
         {

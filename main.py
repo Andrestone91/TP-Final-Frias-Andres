@@ -1,7 +1,8 @@
 from interfaz import aplicacion
 from datasets import productos, clientes, ventas, detalle_ventas
 from variables import ARCHIVO_CLIENTES, ARCHIVO_PRODUCTOS, ARCHIVO_USUARIOS, ARCHIVO_VENTAS, ARCHIVO_DETALLE_VENTA
-from logica import leer_csv, parsear_dataset_lidict, parsear_dataset_producto_matriz
+from archivos import leer_csv
+from logica import parsear_dataset_producto_matriz, parsear_dataset_lidict
 
 if __name__ == "__main__":
 
