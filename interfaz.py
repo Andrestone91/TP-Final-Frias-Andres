@@ -10,7 +10,7 @@ from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
 from archivos import leer_json
 from variables import ARCHIVO_CLIENTES, ARCHIVO_PRODUCTOS, ARCHIVO_USUARIOS, ARCHIVO_VENTAS, ARCHIVO_DETALLE_VENTA
-from usuarios import mostrar_usuarios
+from usuarios import mostrar_usuarios, borrar_usuario
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
@@ -221,8 +221,7 @@ def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
                     mostrar_usuarios(lista_usuarios)
                     pass
                 case 4:
-                    # Borrar Usuarios 
-                    pass
+                    borrar_usuario(lista_usuarios)
                 case 5:
                     run = False
     else:
@@ -285,7 +284,7 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
             case 3:
                 menu_area_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas, usuario)
             case 4:
-                menu_area_usuarios(lista_usuarios.get("usuarios"), usuario)
+                menu_area_usuarios(lista_usuarios, usuario)
             case 5:
                 pass
             case 6:

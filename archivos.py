@@ -12,7 +12,7 @@ def leer_csv(ruta: str):
     with open(ruta, "r", encoding=CODIFICACION) as file:
         contenido = file.readlines()
         return contenido
-    
-def borrar_dato_csv(ruta: str, id: int):
-    with open(ruta, "w", encoding=CODIFICACION) as file:
-        pass
+
+def actualizar_lista_json(ruta: str, informacion: list[dict]):
+    with open(ruta, "w", encoding=CODIFICACION) as json_file:
+        json.dump(informacion, json_file, indent=4)
