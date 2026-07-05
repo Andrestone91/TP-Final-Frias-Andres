@@ -13,8 +13,10 @@ def mensaje_menu_principal(usuario: dict):
     3. Área Ventas
     """
     if usuario.get("tipo") == "admin":
-        mensaje += "4. Área Usuarios" + "\n    "
-
+        mensaje += '4. Área Usuarios'\
+    """
+    5. Área Informes
+    """
     return mensaje
 
 def mensaje_menu_area_productos():
@@ -157,6 +159,28 @@ def mensaje_menu_usuarios():
     3 Ver Usuarios 
     4 Borrar Usuarios 
     5 Salir 
+    """
+    print(mensaje)
+
+def mensaje_menu_informes():
+    """
+    muestra las opciones disponibles del menu area informes
+
+    arg: 
+        
+    return:
+    """
+    
+    mensaje =\
+    """
+    MENU AREA INFORMES
+     	
+    1 Mostrar producto más vendido y la cantidad 
+    2 Mostrar producto menos vendido y la cantidad 
+    3 Mostrar cliente con más compras hechas 
+    4 Mostrar monto total de ventas
+    5 Mostrar cantidad de productos vendidos
+    6 Salir 
     """
     print(mensaje)
 

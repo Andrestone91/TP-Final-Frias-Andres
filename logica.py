@@ -60,7 +60,6 @@ def actualizar_producto(matriz_producto: list[list], producto_modificado: list, 
     print(matriz_producto)
 
 def modificar_producto(matriz_producto: list[list]):
-
     input_int = validar_int("ingresar ID del prodcuto a modificar: ")
     producto_a_modificar = obtener_producto_por_dato(matriz_producto, 0, input_int)
     print("el producto a modificar es: ")
@@ -198,16 +197,6 @@ def parsear_dict_valor(lista_keys: list, lista_tipos: list, dict_lista:list[dict
                 dict_ele[key] = tipo(dict_ele[key])
 
     return dict_lista
-# def parsear_dict_valor(lista: list[dict], keys: list[str], posiciones: list[int], tipo: str):
-#     for fila in lista:
-#         for key, posicion in zip(keys, posiciones):
-#             if key in fila:
-#                     fila[key] = convertir_valor(fila[key], tipo)
-#             else:
-#                 if 0 <= posicion < len(fila):
-#                     fila[posicion] = convertir_valor(fila[posicion], tipo)
-
-#     return lista
     
 def parsear_dataset_lidict(datos: list[str]) -> list[dict]:
     str_claves_limpias = datos.pop(0).replace('\n', '')

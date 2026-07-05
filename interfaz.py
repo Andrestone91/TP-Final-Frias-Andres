@@ -1,15 +1,15 @@
 import os
+from variables import ARCHIVO_CLIENTES, ARCHIVO_PRODUCTOS, ARCHIVO_USUARIOS, ARCHIVO_VENTAS, ARCHIVO_DETALLE_VENTA
+from archivos import leer_json, leer_csv
 from validaciones import validar_opcion
 from mensajes import  mensaje_menu_area_productos, mensaje_menu_productos,\
       mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas, mensaje_menu, imprimir_menu,\
-          mensaje_menu_salir, mensaje_menu_usuarios
+          mensaje_menu_salir, mensaje_menu_usuarios, mensaje_menu_informes
 from logica import cargar_producto, modificar_producto, producto_a_borrar,\
-      do_bubble_sort
+      do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
-from archivos import leer_json
-from variables import ARCHIVO_CLIENTES, ARCHIVO_PRODUCTOS, ARCHIVO_USUARIOS, ARCHIVO_VENTAS, ARCHIVO_DETALLE_VENTA
 from usuarios import mostrar_usuarios, borrar_usuario
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
@@ -219,10 +219,39 @@ def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
                     pass
                 case 3:
                     mostrar_usuarios(lista_usuarios)
-                    pass
                 case 4:
                     borrar_usuario(lista_usuarios)
                 case 5:
+                    run = False
+    else:
+        print('usuario no logueado o no permitido')
+
+def menu_area_informes(usuario: dict):
+    """
+    menu para area de informes
+
+    arg:
+      
+      
+    return
+    """
+    if usuario.get("tipo") == "admin":
+        run = True
+        while run:
+            mensaje_menu_informes()
+            opcion_input = validar_opcion(1,6)
+            match opcion_input:
+                case 1:
+                    pass
+                case 2:
+                    pass
+                case 3:
+                    pass
+                case 4:
+                    pass
+                case 5:
+                    pass
+                case 6:
                     run = False
     else:
         print('usuario no logueado o no permitido')
@@ -239,30 +268,34 @@ def manejo_lista(lista) -> list[dict]:
     """
     return lista
 
-def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ventas: list[dict], lista_detalle_ventas: list[dict]):
+def aplicacion():
     """
     funcion principal de la aplicacion
 
     arg: 
-        matriz_productos (list[list]): matriz de productos
-        lista_clientes (list[dict]): lista de clientes
-        lista_ventas (list[dict]): lista de ventas
-        lista_detalle_ventas (list[dict]): lista detalle de venta
 
     return:
     """
+
+    productos = leer_csv(ARCHIVO_PRODUCTOS)
+    matriz_productos = parsear_dataset_producto_matriz(productos)
+
+    clientes = leer_csv(ARCHIVO_CLIENTES)
+    dict_clientes = parsear_dataset_lidict(clientes)
+    dict_clientes_parseado = parsear_dict_valor(["id"], [int], dict_clientes)
+
+    ventas = leer_csv(ARCHIVO_VENTAS)
+    dict_ventas = parsear_dataset_lidict(ventas)
+    dict_ventas_parseado = parsear_dict_valor(["id", "id_cliente"], [int, int], dict_ventas)
+
+    detalle_venta = leer_csv(ARCHIVO_DETALLE_VENTA)
+    dict_detalle_venta = parsear_dataset_lidict(detalle_venta)
+    dict_detalle_venta_parseado = parsear_dict_valor(
+        ["id", "id_venta", "id_producto", "cantidad"], [int, int, int, int], dict_detalle_venta)
+    
     lista_usuarios: list[dict] = leer_json(ARCHIVO_USUARIOS)
 
-    lista_clientes_aux = manejo_lista(lista_clientes)
-
     usuario = {}
-    usuario: dict = {
-        "id": 1,
-        "username": "andre",
-        "password": "1234",
-        "tipo": "admin",
-        "esta_online": True
-    }
     
     run = True
     while run:
@@ -280,13 +313,14 @@ def aplicacion(matriz_productos:list[list], lista_clientes: list[dict], lista_ve
             case 1:
                 menu_area_productos(matriz_productos, usuario)
             case 2:
-                menu_area_clientes(lista_clientes_aux, usuario)
+                menu_area_clientes(dict_clientes_parseado, usuario)
             case 3:
-                menu_area_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas, usuario)
+                menu_area_ventas(matriz_productos,\
+                                  dict_clientes_parseado, dict_ventas_parseado, dict_detalle_venta_parseado, usuario)
             case 4:
                 menu_area_usuarios(lista_usuarios, usuario)
             case 5:
-                pass
+                menu_area_informes(usuario)
             case 6:
                 run = False
                 print("cerrando programa...")
