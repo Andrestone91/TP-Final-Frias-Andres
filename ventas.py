@@ -1,26 +1,16 @@
-from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic
+from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_ids_unicos
 from validaciones import validar_int
 
 def cargar_venta(lista_detalle_ventas: list[dict]):
     pass
 
-def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int) -> list[dict]:
+def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int, clave: str) -> list[dict]:
     detalle_ventas = []
 
     for detalle in lista_detalle_ventas:
-        if detalle.get("id_venta") == id:
+        if detalle.get(clave) == id:
             detalle_ventas.append(detalle)
     return detalle_ventas
-
-def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
-    ids_set = set()
-
-    for item in lista:
-        ids_set.add(item.get(clave))
-    
-    lista_ids_unicos = list(ids_set)
-
-    return lista_ids_unicos
 
 def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict]:
     lista_productos = []
@@ -50,10 +40,6 @@ def obtener_monto_total(id_venta: int, lista_detalle_ventas: list[dict], lista_d
             total += detalle.get("cantidad") * precio
 
     return total
-    
-def armar_dic(venta: dict, cliente: dict, id_venta, monto_total: float):
-    info = f"{id_venta},{venta.get('id_cliente')},{cliente.get('apellido')},{cliente.get('nombre')},{monto_total}\n"
-    return info
 
 def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict],
                                  lista_detalle_ventas: list[dict]):
@@ -94,7 +80,7 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict]):
 
     for fila_venta in range(len(lista_ventas)):
         if lista_ventas[fila_venta].get("id") == input_id:
-            lista_detalle_venta = obtener_detalle_ventas_de_una_venta(lista_detalle_ventas, input_id)
+            lista_detalle_venta = obtener_detalle_ventas_de_una_venta(lista_detalle_ventas, input_id, "id_venta")
 
             for fila_detalle in lista_detalle_venta:
                 print(fila_detalle)

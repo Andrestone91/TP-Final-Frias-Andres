@@ -267,3 +267,13 @@ def filtrar_info_dic(lista: list[dict], clave: str, id: int):
             break
 
     return item_dicccionario
+
+def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
+    ids_set = set()
+
+    for item in lista:
+        ids_set.add(item.get(clave))
+    
+    lista_ids_unicos = list(ids_set)
+
+    return lista_ids_unicos

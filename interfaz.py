@@ -11,6 +11,7 @@ from clientes import cargar_cliente, modificar_cliente, borrar_cliente
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario
+from detalle_ventas import mostrar_producto_mas_vendido
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
@@ -226,7 +227,7 @@ def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
     else:
         print('usuario no logueado o no permitido')
 
-def menu_area_informes(usuario: dict):
+def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict]):
     """
     menu para area de informes
 
@@ -242,7 +243,7 @@ def menu_area_informes(usuario: dict):
             opcion_input = validar_opcion(1,6)
             match opcion_input:
                 case 1:
-                    pass
+                    mostrar_producto_mas_vendido(lista_detalle_venta)
                 case 2:
                     pass
                 case 3:
@@ -296,6 +297,13 @@ def aplicacion():
     lista_usuarios: list[dict] = leer_json(ARCHIVO_USUARIOS)
 
     usuario = {}
+    usuario = {
+            "id": 2,
+            "username": "otro",
+            "password": "1234",
+            "tipo": "admin",
+            "esta_online": False
+        }
     
     run = True
     while run:
@@ -320,7 +328,7 @@ def aplicacion():
             case 4:
                 menu_area_usuarios(lista_usuarios, usuario)
             case 5:
-                menu_area_informes(usuario)
+                menu_area_informes(usuario, dict_detalle_venta_parseado)
             case 6:
                 run = False
                 print("cerrando programa...")
