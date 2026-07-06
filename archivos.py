@@ -11,8 +11,10 @@ def leer_json(ruta):
 def leer_csv(ruta: str):
     with open(ruta, "r", encoding=CODIFICACION) as file:
         contenido = file.readlines()
+        print('[SYSTEM] -- Informacion extraida --')
         return contenido
 
 def actualizar_lista_json(ruta: str, informacion: list[dict]):
     with open(ruta, "w", encoding=CODIFICACION) as json_file:
         json.dump(informacion, json_file, indent=4)
+        print("[SYSTEM] -- se actualizo correctamente --")

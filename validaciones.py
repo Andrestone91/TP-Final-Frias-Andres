@@ -33,6 +33,15 @@ def validar_str(mensaje: str) -> str:
 
     return input_str
 
+def validar_alphanum(mensaje: str) -> str:
+    input_str = input(mensaje)
+
+    if not input_str.isalnum():
+        print("ERROR: ingrese caractere validos")
+        validar_str(mensaje)
+
+    return input_str
+
 def validar_int(mensaje: str) -> int:
     input_str = input(mensaje)
     input_int = None

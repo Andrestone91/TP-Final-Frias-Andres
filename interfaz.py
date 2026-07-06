@@ -10,7 +10,7 @@ from logica import cargar_producto, modificar_producto, producto_a_borrar,\
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
-from usuarios import mostrar_usuarios, borrar_usuario
+from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
 from detalle_ventas import mostrar_producto_mas_vendido
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
@@ -213,11 +213,9 @@ def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
             opcion_input = validar_opcion(1,5)
             match opcion_input:
                 case 1:
-                    # Crear usuario
-                    pass
+                    crear_usuario(lista_usuarios)
                 case 2:
-                    # Modificar Usuarios
-                    pass
+                    editar_usuario(lista_usuarios)
                 case 3:
                     mostrar_usuarios(lista_usuarios)
                 case 4:

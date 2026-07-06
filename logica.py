@@ -277,3 +277,11 @@ def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
     lista_ids_unicos = list(ids_set)
 
     return lista_ids_unicos
+
+def obtener_ids_dict(lista_dict: list[dict], clave: str) -> list:
+    lista_ids = []
+
+    for item in lista_dict:
+        lista_ids.append(item.get(clave))
+    
+    return lista_ids
