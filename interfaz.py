@@ -5,13 +5,13 @@ from validaciones import validar_opcion
 from mensajes import  mensaje_menu_area_productos, mensaje_menu_productos,\
       mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas, mensaje_menu, imprimir_menu,\
           mensaje_menu_salir, mensaje_menu_usuarios, mensaje_menu_informes
-from logica import cargar_producto, modificar_producto, producto_a_borrar,\
-      do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
+from logica import do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
 from detalle_ventas import mostrar_producto_mas_vendido
+from productos import cargar_producto, modificar_producto, borrar_producto
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
@@ -38,7 +38,7 @@ def menu_area_productos(matriz_productos: list[list], usuario: dict):
                 case 3:
                     menu_productos()
                 case 4:
-                    producto_a_borrar(matriz_productos)
+                    borrar_producto(matriz_productos)
                 case 5:
                     run = False
     else:

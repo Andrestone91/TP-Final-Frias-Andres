@@ -121,7 +121,7 @@ def actualizar_cliente(lista_cliente: list[dict], cliente: dict):
 
 def validar_tipo(tipo_lista: list[str], input_tipo: str) -> bool:
     """
-    valida el tipo seleccionado para clientes a modificar
+    valida el tipo seleccionado para modificar cliente
 
     arg: 
         input_tipo (str): el tipo ingresado.

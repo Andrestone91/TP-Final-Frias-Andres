@@ -1,4 +1,4 @@
-from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_ids_unicos
+from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_ids_unicos, obtener_list_diccionario_productos
 from validaciones import validar_int
 
 def cargar_venta(lista_detalle_ventas: list[dict]):
@@ -11,19 +11,6 @@ def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: in
         if detalle.get(clave) == id:
             detalle_ventas.append(detalle)
     return detalle_ventas
-
-def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict]:
-    lista_productos = []
-
-    for producto in matriz_producto:
-        lista_productos.append({
-            "id": producto[0],
-            "nombre": producto[1],
-            "stock": producto[2],
-            "precio": producto[3],
-        })
-
-    return lista_productos
 
 def obtener_precio(id_producto: int, lista_dict_productos: list[dict]) -> float:
     precio = 0
