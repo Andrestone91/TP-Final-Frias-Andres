@@ -27,7 +27,7 @@ def validar_opcion(op_min:str, op_max:str) -> int:
 def validar_str(mensaje: str) -> str:
     input_str = input(mensaje)
 
-    if not input_str.isalpha():
+    if not input_str.replace(" ", "").isalpha():
         print("ERROR: ingrese un nombre valido")
         validar_str(mensaje)
 

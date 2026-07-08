@@ -40,7 +40,7 @@ def mensaje_menu_area_productos():
     """
     print(mensaje)
 
-def mensaje_menu_productos():
+def mensaje_menu_ver_productos():
     """
     muestra las opciones disponibles del menu ver productos
 

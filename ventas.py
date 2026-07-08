@@ -1,4 +1,4 @@
-from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_ids_unicos, obtener_list_diccionario_productos
+from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_valores_unicos, obtener_list_diccionario_productos
 from validaciones import validar_int
 
 def cargar_venta(lista_detalle_ventas: list[dict]):
@@ -29,11 +29,11 @@ def obtener_monto_total(id_venta: int, lista_detalle_ventas: list[dict], lista_d
     return total
 
 def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict],
-                                 lista_detalle_ventas: list[dict]):
+                                 lista_detalle_ventas: list[dict], clave: str, ord: str):
     
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
 
-    lista_ids_unicos_detalle_ventas = obtener_ids_unicos(lista_detalle_ventas, "id_venta")
+    lista_ids_unicos_detalle_ventas = obtener_valores_unicos(lista_detalle_ventas, "id_venta")
     lista_detalle_final: list[dict] = []
 
     for id_venta in lista_ids_unicos_detalle_ventas:
@@ -50,7 +50,7 @@ def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: l
             "monto_total": monto_total
         })
 
-    do_bubble_sort(lista_detalle_final, "id_venta", "lista_detalle_final", "DES")
+    do_bubble_sort(lista_detalle_final, clave, "lista_detalle_final", ord)
         
 def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict]):
     """

@@ -1,5 +1,6 @@
 from validaciones import validar_str, validar_int
-from logica import mostrar_info_completa
+from logica import mostrar_info_completa, obtener_valores_unicos, do_bubble_sort
+from ventas import obtener_detalle_ventas_de_una_venta
 
 def obtener_ids_clientes(lista_clientes: list[dict]) -> list:
     """
@@ -186,3 +187,12 @@ def borrar_cliente(lista_clientes: list[dict]):
         
     mostrar_info_completa(lista_clientes, "clientes")
 
+def mostrar_cliente_por_ciudad(lista_clientes: list[dict]):
+    ciudades = obtener_valores_unicos(lista_clientes, "ciudad")
+    info_ciudad = ""
+    for ciudad in ciudades:
+        info_ciudad += f'{ciudad} - '
+    
+    input_ciudad = validar_str(f"ingrese algua de las siguientes ciudades --- {info_ciudad}: ")
+    clientes_unica_ciudad = obtener_detalle_ventas_de_una_venta(lista_clientes, input_ciudad, "ciudad")
+    do_bubble_sort(clientes_unica_ciudad, "apellido", "clientes", "ASC")

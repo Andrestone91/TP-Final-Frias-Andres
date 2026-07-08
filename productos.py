@@ -1,5 +1,6 @@
 from validaciones import validar_str, validar_int, validar_float
-from logica import obtener_ids
+from logica import obtener_ids, mostrar_info_completa_matriz, obtener_list_diccionario_productos,\
+        do_bubble_sort
 
 def obtener_producto_por_dato(matriz_producto: list[list], columna: int, valor) -> list:
     producto = []
@@ -28,8 +29,8 @@ def cargar_producto(matriz_producto: list[list]):
     nuevo_producto = [nuevo_id, nombre, stock, precio_unitario]
 
     matriz_producto.append(nuevo_producto)
-    print("producto agregado correctamente")
-    print(matriz_producto)
+    print("producto agregado correctamente\n")
+    mostrar_info_completa_matriz(matriz_producto)
 
 def actualizar_producto(matriz_producto: list[list], producto_modificado: list, id: int):
     cantidad_filas = len(matriz_producto)
@@ -39,17 +40,18 @@ def actualizar_producto(matriz_producto: list[list], producto_modificado: list, 
         if matriz_producto[fila][0] == id:
             for columna in range(1, cantidad_columnas):
                 matriz_producto[fila][columna] = producto_modificado[columna]
-
-    print(matriz_producto)
+    print("el producto fue modificado\n")
+    mostrar_info_completa_matriz(matriz_producto)
 
 def modificar_producto(matriz_producto: list[list]):
+    mostrar_info_completa_matriz(matriz_producto)
     input_int = validar_int("ingresar ID del prodcuto a modificar: ")
     producto_a_modificar = obtener_producto_por_dato(matriz_producto, 0, input_int)
-
+    info = f'{producto_a_modificar[0]},{producto_a_modificar[1]},{producto_a_modificar[2]},{producto_a_modificar[3]}\n'
     if producto_a_modificar:
-        print("el producto a modificar es: ")
-        print(producto_a_modificar)
-        opcion = input("que dato desea modificar? [nombre, inventario, precio]: ")
+        print("el producto a modificar es\n")
+        print(info)
+        opcion = validar_str("que dato desea modificar? [nombre, inventario, precio]: ")
 
         match opcion:
             case "nombre":
@@ -63,22 +65,30 @@ def modificar_producto(matriz_producto: list[list]):
                 producto_a_modificar[3] = nuevo_precio
             case _:
                 print("la opcion no coincide, producto no modificado")
+                return
         
         actualizar_producto(matriz_producto, producto_a_modificar, input_int)
     else:
         print("ERROR: no se encontro el id seleccionado")
 
-def borrar_producto(matriz_producto:list[list]):
-      print(matriz_producto)
+def borrar_producto(matriz_producto:list[list]) -> bool:
+    mostrar_info_completa_matriz(matriz_producto)
 
-      input_id = validar_int("ingrese el numero id a borrar: ")
+    fue_borrado = False
+    input_id = validar_int("ingrese el numero id a borrar: ")
 
-      for fila in range(len(matriz_producto)):
-          if matriz_producto[fila][0] == input_id:
-              matriz_producto.pop(fila)
-              print("producto borrado:")
-              break
-          else:
-              print("id no encontrado:")
-              break
-      print(matriz_producto)
+    for fila in range(len(matriz_producto)):
+        if matriz_producto[fila][0] == input_id:
+            matriz_producto.pop(fila)
+            print("producto borrado\n")
+            fue_borrado = True
+            mostrar_info_completa_matriz(matriz_producto)
+            break
+    if not fue_borrado:
+        print("no se encontro el producto")
+
+    return fue_borrado
+
+def ver_productos_ord(matriz_producto: list[list], clave: str, ord: str):
+    lista_dict_productos = obtener_list_diccionario_productos(matriz_producto)
+    do_bubble_sort(lista_dict_productos, clave, "productos", ord)

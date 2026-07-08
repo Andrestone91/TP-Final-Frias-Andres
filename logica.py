@@ -73,8 +73,31 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
 
         print(info)
 
+    elif nombre_lista == "productos":
+        for fila in range(len(lista_dict)):
+            id = lista_dict[fila].get("id")
+            nombre = lista_dict[fila].get("nombre")
+            stock = lista_dict[fila].get("stock")
+            precio = lista_dict[fila].get("precio")
+
+            info += f"{id},{nombre},{stock},{precio}\n"
+
+        print(info)
+
     else:
         print("lista no reconocida")
+
+def mostrar_info_completa_matriz(matriz: list[list]):
+    info = ''
+    for fila in matriz:
+        id = fila[0]
+        nombre = fila[1]
+        inventario = fila[2]
+        precio = fila[3]
+
+        info += f'{id},{nombre},{inventario},{precio}' + "\n"
+
+    print(info)
 
 def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: str= 'ASC'):
     """
@@ -104,6 +127,32 @@ def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: st
                 lista_dict[siguiente_elemento],  lista_dict[primer_elemento]
     mostrar_info_completa(lista_dict,  nombre_lista)
 
+# def do_bubble_sort_matriz(matriz: list[list], indice: str, ord: str= 'ASC'):
+#     """
+#     tipo de ordenamiento bubble sort.
+
+#     arg: 
+#         list_dict (list[dict]): contiene la lista de diccionario a ordenar.
+
+#     return
+#         None
+#     """
+#     tamanio_lista = len(matriz)
+
+#     for vueltas in range(tamanio_lista):
+
+#         for primer_elemento in range(0, tamanio_lista - vueltas - 1):
+
+#             siguiente_elemento = primer_elemento + 1
+
+#             if matriz[primer_elemento][indice] > matriz[siguiente_elemento][indice] and ord == 'ASC' or\
+#                 matriz[primer_elemento][indice] < matriz[siguiente_elemento][indice] and ord == 'DES':
+
+#                matriz[primer_elemento], matriz[siguiente_elemento] =\
+#                 matriz[siguiente_elemento], matriz[primer_elemento]
+
+#     mostrar_info_completa_matriz(matriz)
+
 def convertir_valor(valor, tipo: str):
     if tipo == "int":
         return parsear_str_a_int(valor)
@@ -122,19 +171,19 @@ def parsear_dict_valor(lista_keys: list, lista_tipos: list, dict_lista:list[dict
 def parsear_dataset_lidict(datos: list[str]) -> list[dict]:
     str_claves_limpias = datos.pop(0).replace('\n', '')
     claves = split_texto(str_claves_limpias, ',')
-    lista_dict_heroes = []
+    lista_dict = []
 
-    for heroe in datos:
-        heroe = heroe.replace('\n', '')
-        datos_heroe = split_texto(heroe, ',')
-        heroe_dict = {}
+    for item in datos:
+        item = item.replace('\n', '')
+        datos = split_texto(item, ',')
+        item_dict = {}
 
         for indice_clave in range(len(claves)):
-            heroe_dict.update(
-                {claves[indice_clave] : datos_heroe[indice_clave]}
+            item_dict.update(
+                {claves[indice_clave] : datos[indice_clave]}
             )
-        lista_dict_heroes.append(heroe_dict)
-    return lista_dict_heroes
+        lista_dict.append(item_dict)
+    return lista_dict
 
 def split_texto(texto: str, separador: str) -> list[str]:
     lista_str = []
@@ -189,7 +238,7 @@ def filtrar_info_dic(lista: list[dict], clave: str, id: int):
 
     return item_dicccionario
 
-def obtener_ids_unicos(lista: list[dict], clave: str) -> list:
+def obtener_valores_unicos(lista: list[dict], clave: str) -> list:
     ids_set = set()
 
     for item in lista:

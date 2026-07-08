@@ -2,16 +2,16 @@ import os
 from variables import ARCHIVO_CLIENTES, ARCHIVO_PRODUCTOS, ARCHIVO_USUARIOS, ARCHIVO_VENTAS, ARCHIVO_DETALLE_VENTA
 from archivos import leer_json, leer_csv
 from validaciones import validar_opcion
-from mensajes import  mensaje_menu_area_productos, mensaje_menu_productos,\
+from mensajes import  mensaje_menu_area_productos, mensaje_menu_ver_productos,\
       mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas, mensaje_menu, imprimir_menu,\
           mensaje_menu_salir, mensaje_menu_usuarios, mensaje_menu_informes
 from logica import do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
-from clientes import cargar_cliente, modificar_cliente, borrar_cliente
+from clientes import cargar_cliente, modificar_cliente, borrar_cliente, mostrar_cliente_por_ciudad
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
 from login import iniciar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
 from detalle_ventas import mostrar_producto_mas_vendido
-from productos import cargar_producto, modificar_producto, borrar_producto
+from productos import cargar_producto, modificar_producto, borrar_producto, ver_productos_ord
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
     """
@@ -36,7 +36,7 @@ def menu_area_productos(matriz_productos: list[list], usuario: dict):
                 case 2:
                     modificar_producto(matriz_productos)
                 case 3:
-                    menu_productos()
+                    ver_productos(matriz_productos)
                 case 4:
                     borrar_producto(matriz_productos)
                 case 5:
@@ -45,7 +45,7 @@ def menu_area_productos(matriz_productos: list[list], usuario: dict):
         print('Primero tiene que loguear en el sistema')
 
 
-def menu_productos():
+def ver_productos(matriz_productos: list[list]):
     """
     menu para ver productos
 
@@ -56,16 +56,16 @@ def menu_productos():
     run = True
 
     while run:
-        mensaje_menu_productos()
+        mensaje_menu_ver_productos()
         opcion_input = validar_opcion(1,4)
 
         match opcion_input:
             case 1:
-                pass
+                ver_productos_ord(matriz_productos, "id", "ASC")
             case 2:
-                pass
+                ver_productos_ord(matriz_productos, "stock", "ASC")
             case 3:
-                pass
+                ver_productos_ord(matriz_productos, "nombre", "ASC")
             case 4:
                 run = False
 
@@ -119,7 +119,7 @@ def menu_ver_clientes(lista_clientes: list[dict]):
             case 3:
                 do_bubble_sort(lista_clientes, "ciudad", nombre_lista)
             case 4:
-                do_bubble_sort(lista_clientes, "apellido", nombre_lista)
+                mostrar_cliente_por_ciudad(lista_clientes)
             case 5:
                 run = False
 
@@ -191,9 +191,9 @@ def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], li
         opcion_input = validar_opcion(1,3)
         match opcion_input:
             case 1:
-                mostrar_info_completa_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
+                mostrar_info_completa_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas, "id_venta", "DES")
             case 2:
-                pass
+                mostrar_info_completa_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas, "monto_total", "DES")
             case 3:
                 run = False
 
