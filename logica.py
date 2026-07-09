@@ -84,6 +84,17 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
 
         print(info)
 
+    elif nombre_lista == "detalle_venta":
+        for fila in range(len(lista_dict)):
+            id = lista_dict[fila].get("id")
+            id_venta = lista_dict[fila].get("id_venta")
+            id_producto = lista_dict[fila].get("id_producto")
+            cantidad = lista_dict[fila].get("cantidad")
+
+            info += f"{id},{id_venta},{id_producto},{cantidad}\n"
+
+        print(info)
+
     else:
         print("lista no reconocida")
 
@@ -229,14 +240,22 @@ def parsear_str_a_float(texto: str) -> float:
     valor = float(texto)
     return valor
 
-def filtrar_info_dic(lista: list[dict], clave: str, id: int):
+def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
     item_dicccionario = {}
     for item in lista:
-        if item.get(clave) == id:
+        if item.get(clave) == valor:
             item_dicccionario.update(item)
             break
 
     return item_dicccionario
+
+def filtrar_por_clave(datos: list[dict], clave: str, valor: int) -> list[dict]:
+    filtrados = []
+
+    for dato in datos:
+        if dato.get(clave) == valor:
+            filtrados.append(dato)
+    return filtrados
 
 def obtener_valores_unicos(lista: list[dict], clave: str) -> list:
     ids_set = set()

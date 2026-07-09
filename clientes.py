@@ -194,5 +194,10 @@ def mostrar_cliente_por_ciudad(lista_clientes: list[dict]):
         info_ciudad += f'{ciudad} - '
     
     input_ciudad = validar_str(f"ingrese algua de las siguientes ciudades --- {info_ciudad}: ")
+
+    if input_ciudad not in ciudades:
+        print(f"la ciudad {input_ciudad} no es valida")
+        return
+    
     clientes_unica_ciudad = obtener_detalle_ventas_de_una_venta(lista_clientes, input_ciudad, "ciudad")
     do_bubble_sort(clientes_unica_ciudad, "apellido", "clientes", "ASC")

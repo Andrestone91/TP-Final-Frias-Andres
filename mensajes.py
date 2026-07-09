@@ -114,7 +114,7 @@ def mensaje_menu_ventas():
     """
     MENU AREA VENTAS
      	
-    1 Cargar Ventas (permitir agregar productos a la venta) 
+    1 Cargar Ventas
     2 Modificar Venta 
     3 Ver Ventas
     4 Borrar Venta 

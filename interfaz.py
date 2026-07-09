@@ -144,15 +144,14 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
             opcion_input = validar_opcion(1,5)
             match opcion_input:
                 case 1:
-                    # cargar_venta(lista_detalle_ventas)
-                    pass
+                    cargar_venta(lista_ventas, lista_detalle_ventas, matriz_productos)
                 case 2:
                     # 2 Modificar Ventas
                     pass
                 case 3:
                     menu_ver_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
                 case 4:
-                    borrar_venta(lista_ventas, lista_detalle_ventas)
+                    borrar_venta(lista_ventas, lista_detalle_ventas, matriz_productos)
                 case 5:
                     run = False
     else:
