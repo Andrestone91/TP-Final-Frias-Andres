@@ -7,7 +7,7 @@ from mensajes import  mensaje_menu_area_productos, mensaje_menu_ver_productos,\
           mensaje_menu_salir, mensaje_menu_usuarios, mensaje_menu_informes
 from logica import do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente, mostrar_cliente_por_ciudad
-from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta
+from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta, modificar_venta
 from login import iniciar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
 from detalle_ventas import mostrar_producto_mas_vendido
@@ -144,9 +144,9 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
             opcion_input = validar_opcion(1,5)
             match opcion_input:
                 case 1:
-                    cargar_venta(lista_ventas, lista_detalle_ventas, matriz_productos)
+                    cargar_venta(lista_ventas, lista_detalle_ventas, matriz_productos, lista_clientes)
                 case 2:
-                    # 2 Modificar Ventas
+                    modificar_venta(lista_ventas, lista_detalle_ventas, matriz_productos, lista_clientes)
                     pass
                 case 3:
                     menu_ver_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)

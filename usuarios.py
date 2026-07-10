@@ -24,7 +24,7 @@ def crear_usuario(lista_usuarios: list[dict]) -> bool:
 
     user_valido = False
     password_valido = False
-    dict_usuarios = lista_usuarios.get("usuarios")
+    dict_usuarios: list[dict] = lista_usuarios.get("usuarios")
     
     input_usuario = validar_str("ingrese el nombre de usuario: ")
 
@@ -74,7 +74,9 @@ def editar_usuario(lista_usuarios: list[dict]):
     usuario_a_modificar = filtrar_info_dic(dict_usuarios, "id" ,input_id)
     if usuario_a_modificar:
         print("el usuario a modificar es: ")
-        print(usuario_a_modificar)
+        usuario = f'{usuario_a_modificar.get("id")},{usuario_a_modificar.get("username")}'\
+            f',{usuario_a_modificar.get("password")},{usuario_a_modificar.get("tipo")},{usuario_a_modificar.get("esta_online")}'
+        print(usuario)
         opcion = input("que dato desea modificar? [password, tipo]: ")
 
         match opcion:

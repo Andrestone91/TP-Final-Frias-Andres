@@ -1,6 +1,6 @@
 from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_valores_unicos,\
       obtener_list_diccionario_productos, filtrar_por_clave, obtener_ids_dict
-from validaciones import validar_int
+from validaciones import validar_int, validar_str
 
 def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int, clave: str) -> list[dict]:
     detalle_ventas = []
@@ -81,7 +81,9 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
         
     # mostrar_info_completa(lista_ventas, "ventas")
 
-def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list]):
+def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
+                  lista_clientes: list[dict]):
+    
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
 
     mostrar_info_completa(lista_ventas, "ventas")
@@ -116,12 +118,17 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
             producto.update({"stock": stock - input_cantidad})
             break
 
+    venta_seleccionado = filtrar_info_dic(lista_ventas, "id", input_venta_id)
+    cliente = filtrar_info_dic(lista_clientes, "id", venta_seleccionado.get("id_cliente"))
+
+    if not cliente:
+        print("ERROR: el cliente no existe")
+        return
+
     ids_detalle_ventas = obtener_valores_unicos(lista_detalle_ventas, "id")
 
     ids_detalle_ventas.reverse()
-
     ultimo_id = ids_detalle_ventas[0]
-
     nuevo_id =  ultimo_id + 1
 
     lista_detalle_ventas.append({
@@ -130,5 +137,91 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
         "id_producto": input_id_producto,
         "cantidad": input_cantidad
     })
-    mostrar_info_completa(dict_productos, "productos")
+    print("el producto fue agregado correctamente\n")
     mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
+
+def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
+                        lista_clientes: list[dict]):
+    dict_productos = obtener_list_diccionario_productos(matriz_productos)
+
+    mostrar_info_completa(lista_ventas, "ventas")
+    input_venta_id = validar_int("seleccione el ID de la venta para modificar: ")
+
+    venta_seleccionado = filtrar_info_dic(lista_ventas, "id", input_venta_id)
+    cliente = filtrar_info_dic(lista_clientes, "id", venta_seleccionado.get("id_cliente"))
+
+    if not cliente:
+        print("ERROR: el cliente no existe")
+        return
+
+    detalle_venta_encontrados = filtrar_por_clave(lista_detalle_ventas, "id_venta", input_venta_id)
+    productos = []
+    for detalle in detalle_venta_encontrados:
+        producto = filtrar_info_dic(dict_productos, "id", detalle.get("id_producto"))
+        productos.append(producto.get("nombre"))
+
+    mostrar_info_completa(dict_productos, "productos")
+
+    input_nombre_producto = validar_str(f"ingrese el nombre del producto para modificar cantidad ó uno nuevo" + \
+                                         f" para agregar {productos}: ")
+    producto_filtrado = filtrar_info_dic(dict_productos, "nombre", input_nombre_producto)
+
+    if not producto_filtrado:
+        print("no se encontro el producto")
+        return
+    
+    stock = producto_filtrado.get("stock")
+
+    for detalle in detalle_venta_encontrados:
+        if detalle.get("id_producto") == producto_filtrado.get("id"):
+            print(f"la cantidad actual para {producto_filtrado.get("nombre")} es {detalle.get("cantidad")}")
+            nueva_cantidad = validar_int("ingrese la nueva cantidad [0 para borrarla]: ")
+
+            if nueva_cantidad > stock:
+                print("cantidad supera el limite disponible")
+                return
+            
+            for producto in dict_productos:
+                if producto.get("id") == producto_filtrado.get("id"):
+                    stock_anterior = stock + detalle.get("cantidad")
+                    producto.update({"stock": stock_anterior - nueva_cantidad})
+                    break
+
+            for indice in range(len(lista_detalle_ventas)):
+                if lista_detalle_ventas[indice].get("id") == detalle.get("id") and nueva_cantidad > 0:
+                    lista_detalle_ventas[indice].update({"cantidad": nueva_cantidad})
+                    break
+
+                elif lista_detalle_ventas[indice].get("id") == detalle.get("id"):
+                    lista_detalle_ventas.pop(indice)
+                    break
+            print("se actualizo la venta correctamente\n")
+            mostrar_info_completa(dict_productos, "productos")
+            mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
+            return
+        
+    cantidad = validar_int(f"se agrega {producto_filtrado.get("nombre")}, ingresa la cantidad: ")
+    ids_detalle = obtener_valores_unicos(lista_detalle_ventas, "id")
+    ids_detalle.reverse()
+    ultimo_id = ids_detalle[0]
+    nuevo_id = ultimo_id + 1
+
+    if cantidad > stock:
+        print("cantidad supera el limite disponible")
+        return
+    
+    for producto in dict_productos:
+        if producto.get("id") == producto_filtrado.get("id"):
+            producto.update({"stock": stock - cantidad})
+            break
+
+    lista_detalle_ventas.append({
+        "id": nuevo_id,
+        "id_venta": input_venta_id,
+        "id_producto": producto_filtrado.get("id"),
+        "cantidad": cantidad
+    })
+    print("se actualizo la venta correctamente\n")
+    mostrar_info_completa(dict_productos, "productos")
+    mostrar_info_completa(lista_detalle_ventas, "detalle_venta")       
+
