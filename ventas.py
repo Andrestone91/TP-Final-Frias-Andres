@@ -64,22 +64,28 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
     mostrar_info_completa(lista_ventas, "ventas")
     input_id = validar_int("ingrese el numero id a borrar: ")
 
-    for fila_venta in range(len(lista_ventas)):
-        if lista_ventas[fila_venta].get("id") == input_id:
-            lista_detalle_venta = obtener_detalle_ventas_de_una_venta(lista_detalle_ventas, input_id, "id_venta")
+    for indice_ventas in range(len(lista_ventas)):
+        if lista_ventas[indice_ventas].get("id") == input_id:
+            lista_detalle_venta_filtrado = filtrar_por_clave(lista_detalle_ventas, "id_venta", input_id)
 
-            for fila_detalle in lista_detalle_venta:
-                producto = filtrar_info_dic(dict_productos, "id", fila_detalle.get("id_producto"))
-                producto.update({"inventario": producto.get("stock") + fila_detalle.get("cantidad")})
-                lista_detalle_venta.pop({"id": fila_detalle.get("id")})
-                print(lista_detalle_venta)
-                # lista_detalle_venta.pop(fila_detalle)
-            print(lista_ventas[fila_venta])
-            # lista_ventas.pop(fila_venta)
-            print("venta borrada:")
+            for indice_detalle in range(len(lista_detalle_venta_filtrado)):
+                producto_encontrado = filtrar_info_dic(dict_productos, "id", lista_detalle_venta_filtrado[indice_detalle].get("id_producto"))
+                for producto in dict_productos:
+                    if producto_encontrado.get("id") == producto.get("id"):
+                        stock_actual = producto.get("stock")
+                        cantidad_en_detalle_venta = lista_detalle_venta_filtrado[indice_detalle].get("cantidad")
+                        producto.update({"stock": stock_actual + cantidad_en_detalle_venta})
+                        break
+                    
+                for indice in range(len(lista_detalle_ventas)):
+                    if lista_detalle_ventas[indice].get("id") == lista_detalle_venta_filtrado[indice_detalle].get("id"):
+                        lista_detalle_ventas.pop(indice)
+                        break
+
+            lista_ventas.pop(indice_ventas)
             break
-        
-    # mostrar_info_completa(lista_ventas, "ventas")
+
+    mostrar_info_completa(lista_ventas, "ventas")
 
 def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
                   lista_clientes: list[dict]):
@@ -196,7 +202,6 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
                     lista_detalle_ventas.pop(indice)
                     break
             print("se actualizo la venta correctamente\n")
-            mostrar_info_completa(dict_productos, "productos")
             mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
             return
         
@@ -222,6 +227,5 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
         "cantidad": cantidad
     })
     print("se actualizo la venta correctamente\n")
-    mostrar_info_completa(dict_productos, "productos")
     mostrar_info_completa(lista_detalle_ventas, "detalle_venta")       
 
