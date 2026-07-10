@@ -10,7 +10,7 @@ from clientes import cargar_cliente, modificar_cliente, borrar_cliente, mostrar_
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta, modificar_venta
 from login import iniciar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
-from detalle_ventas import mostrar_producto_mas_vendido
+from detalle_ventas import mostrar_productos_cantidad_ventas
 from productos import cargar_producto, modificar_producto, borrar_producto, ver_productos_ord
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
@@ -209,7 +209,7 @@ def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
     else:
         print('usuario no logueado o no permitido')
 
-def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict]):
+def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict], matriz_productos: list[list]):
     """
     menu para area de informes
 
@@ -225,9 +225,9 @@ def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict]):
             opcion_input = validar_opcion(1,6)
             match opcion_input:
                 case 1:
-                    mostrar_producto_mas_vendido(lista_detalle_venta)
+                    mostrar_productos_cantidad_ventas(lista_detalle_venta, matriz_productos, "mas", "DES")
                 case 2:
-                    pass
+                     mostrar_productos_cantidad_ventas(lista_detalle_venta, matriz_productos, "menos", "ASC")
                 case 3:
                     pass
                 case 4:
@@ -310,7 +310,7 @@ def aplicacion():
             case 4:
                 menu_area_usuarios(lista_usuarios, usuario)
             case 5:
-                menu_area_informes(usuario, dict_detalle_venta_parseado)
+                menu_area_informes(usuario, dict_detalle_venta_parseado, matriz_productos)
             case 6:
                 run = False
                 print("cerrando programa...")

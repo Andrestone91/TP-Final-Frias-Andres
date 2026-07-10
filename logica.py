@@ -95,8 +95,14 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
 
         print(info)
 
-    else:
-        print("lista no reconocida")
+    elif nombre_lista == "producto_cantidad":
+        for fila in range(len(lista_dict)):
+            id_producto = lista_dict[fila].get("id_producto")
+            cantidad = lista_dict[fila].get("cantidad")
+
+            info += f"{id_producto},{cantidad}\n"
+
+        print(info)
 
 def mostrar_info_completa_matriz(matriz: list[list]):
     info = ''
