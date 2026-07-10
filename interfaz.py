@@ -147,7 +147,6 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
                     cargar_venta(lista_ventas, lista_detalle_ventas, matriz_productos, lista_clientes)
                 case 2:
                     modificar_venta(lista_ventas, lista_detalle_ventas, matriz_productos, lista_clientes)
-                    pass
                 case 3:
                     menu_ver_ventas(matriz_productos, lista_clientes, lista_ventas, lista_detalle_ventas)
                 case 4:
@@ -156,20 +155,6 @@ def menu_area_ventas(matriz_productos: list[list], lista_clientes: list[dict], l
                     run = False
     else:
         print('Primero tiene que loguear en el sistema')
-
-def menu_modificar_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict], 
-                    lista_detalle_ventas: list[dict]):
-    """
-    menu modificar venta
-
-    arg:
-      matriz_productos (list[list]): productos en matriz
-      lista_clientes list[dict]: clientes en diccionario
-      lista_ventas (list[dict]): ventas en diccionario
-      lista_detalle_ventas (list[dict]):  detalle ventas en diccionario
-
-    return
-    """
 
 def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict], 
                     lista_detalle_ventas: list[dict]):

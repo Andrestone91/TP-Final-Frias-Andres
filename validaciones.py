@@ -1,3 +1,4 @@
+from logica import parsear_str_a_booleano
 def validar_opcion(op_min:str, op_max:str) -> int:
 
     """
@@ -67,3 +68,11 @@ def validar_float(mensaje: str) -> float:
         return input_float
     else:
         return float(input_str)
+    
+def validar_bool(mensaje: str) -> bool:
+    input_str = input(mensaje)
+
+    if input_str not in ('true', 'false'):
+        print("ERROR: ingrese true o false")
+        return validar_bool(mensaje)
+    return parsear_str_a_booleano(input_str)

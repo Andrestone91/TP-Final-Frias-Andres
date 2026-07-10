@@ -105,8 +105,8 @@ def mostrar_info_completa_matriz(matriz: list[list]):
         nombre = fila[1]
         inventario = fila[2]
         precio = fila[3]
-
-        info += f'{id},{nombre},{inventario},{precio}' + "\n"
+        activo = fila[4]
+        info += f'{id},{nombre},{inventario},{precio},{activo}' + "\n"
 
     print(info)
 
@@ -228,6 +228,7 @@ def parsear_dataset_producto_matriz(datos: list[str]) -> list[list]:
         datos_linea[0] = parsear_str_a_int(datos_linea[0]) 
         datos_linea[2] = parsear_str_a_int(datos_linea[2]) 
         datos_linea[3] = parsear_str_a_float(datos_linea[3]) 
+        datos_linea[4] = parsear_str_a_booleano(datos_linea[4]) 
         
         mi_matriz.append(datos_linea)
     return mi_matriz
@@ -239,6 +240,12 @@ def parsear_str_a_int(texto: str) -> int:
 def parsear_str_a_float(texto: str) -> float:
     valor = float(texto)
     return valor
+
+def parsear_str_a_booleano(texto: str) -> bool:
+    if texto == "true":
+        return True
+    if texto == "false":
+        return False
 
 def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
     item_dicccionario = {}
@@ -284,6 +291,15 @@ def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict
             "nombre": producto[1],
             "stock": producto[2],
             "precio": producto[3],
+            "activo": producto[4]
         })
 
     return lista_productos
+
+def obtener_productos_activos(lista_productos: list[dict]) -> list[dict]:
+    dict_productos = []
+    for indice in range(len(lista_productos)):
+
+        if lista_productos[indice].get("activo"):
+            dict_productos.append(lista_productos[indice])
+    return dict_productos
