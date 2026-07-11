@@ -1,5 +1,5 @@
 from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_valores_unicos,\
-      obtener_list_diccionario_productos, filtrar_por_clave, obtener_ids_dict
+      obtener_list_diccionario_productos, filtrar_por_clave
 from validaciones import validar_int, validar_str
 
 def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int, clave: str) -> list[dict]:

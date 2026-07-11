@@ -270,6 +270,21 @@ def filtrar_por_clave(datos: list[dict], clave: str, valor: int) -> list[dict]:
             filtrados.append(dato)
     return filtrados
 
+
+def filtrar_por_id(dato: dict, valor: int) -> bool:
+    return dato.get("id") == valor
+
+def filtrar_por_id_venta(dato: dict, valor: int) -> bool:
+    return dato.get("id_venta") == valor
+
+def filtrar_dato_dict(datos: list[dict], callback, valor: int) -> list[dict]:
+    filtrados = []
+
+    for dato in datos:
+        if callback(dato, valor):
+            filtrados.append(dato)
+    return filtrados
+
 def obtener_valores_unicos(lista: list[dict], clave: str) -> list:
     ids_set = set()
 

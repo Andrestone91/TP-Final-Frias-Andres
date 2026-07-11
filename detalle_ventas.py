@@ -1,5 +1,5 @@
 from logica import filtrar_info_dic, obtener_valores_unicos, obtener_list_diccionario_productos, do_bubble_sort,\
-         filtrar_por_clave
+          filtrar_dato_dict, filtrar_por_id, filtrar_por_id_venta
 
 from ventas import obtener_detalle_ventas_de_una_venta
 
@@ -36,12 +36,12 @@ def mostrar_productos_cantidad_ventas(lista_detalle_venta: list[dict], matriz_pr
 
 def mostrar_cliente_con_mas_compras(lista_clientes: list[dict], lista_detalle_venta: list[dict], lista_ventas: list[dict]):
     cliente_cantidad: list[dict] = []
-    
+
     for venta in lista_ventas:
-        ventas_cliente = filtrar_por_clave(lista_ventas, "id_cliente", venta.get("id_cliente"))
+        ventas_cliente = filtrar_dato_dict(lista_ventas, filtrar_por_id, venta.get("id_cliente"))
         cantidad = 0
         for id_venta in ventas_cliente:
-            detalle_por_cliente = filtrar_por_clave(lista_detalle_venta, "id_venta", id_venta.get("id"))
+            detalle_por_cliente = filtrar_dato_dict(lista_detalle_venta, filtrar_por_id_venta, id_venta.get("id"))
             for indice_detalle in range(len(detalle_por_cliente)):
                 cantidad += detalle_por_cliente[indice_detalle].get("cantidad")
         cliente_cantidad.append({
@@ -62,3 +62,6 @@ def mostrar_cliente_con_mas_compras(lista_clientes: list[dict], lista_detalle_ve
     cantidad de compras: {cliente_cantidad[0].get("cantidad")}
     """
     print(mensaje)
+
+def mostrar_monto_total_ventas():
+    pass
