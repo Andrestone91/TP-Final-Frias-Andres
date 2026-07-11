@@ -10,7 +10,7 @@ from clientes import cargar_cliente, modificar_cliente, borrar_cliente, mostrar_
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta, modificar_venta
 from login import iniciar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
-from detalle_ventas import mostrar_productos_cantidad_ventas
+from detalle_ventas import mostrar_productos_cantidad_ventas, mostrar_cliente_con_mas_compras
 from productos import cargar_producto, modificar_producto, borrar_producto, ver_productos_ord
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
@@ -209,7 +209,8 @@ def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
     else:
         print('usuario no logueado o no permitido')
 
-def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict], matriz_productos: list[list]):
+def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict], matriz_productos: list[list], lista_clientes: list[dict],\
+                       lista_ventas: list[dict]):
     """
     menu para area de informes
 
@@ -229,7 +230,7 @@ def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict], matriz_pr
                 case 2:
                      mostrar_productos_cantidad_ventas(lista_detalle_venta, matriz_productos, "menos", "ASC")
                 case 3:
-                    pass
+                    mostrar_cliente_con_mas_compras(lista_clientes, lista_detalle_venta, lista_ventas)
                 case 4:
                     pass
                 case 5:
@@ -310,7 +311,7 @@ def aplicacion():
             case 4:
                 menu_area_usuarios(lista_usuarios, usuario)
             case 5:
-                menu_area_informes(usuario, dict_detalle_venta_parseado, matriz_productos)
+                menu_area_informes(usuario, dict_detalle_venta_parseado, matriz_productos, dict_clientes_parseado, dict_ventas_parseado)
             case 6:
                 run = False
                 print("cerrando programa...")

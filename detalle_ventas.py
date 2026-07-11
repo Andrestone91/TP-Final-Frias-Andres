@@ -1,4 +1,6 @@
-from logica import filtrar_info_dic, obtener_valores_unicos, obtener_list_diccionario_productos, do_bubble_sort
+from logica import filtrar_info_dic, obtener_valores_unicos, obtener_list_diccionario_productos, do_bubble_sort,\
+         filtrar_por_clave
+
 from ventas import obtener_detalle_ventas_de_una_venta
 
 def obtener_producto_cantidad(lista_detalle_venta: list[dict]) -> list[dict]:
@@ -29,5 +31,34 @@ def mostrar_productos_cantidad_ventas(lista_detalle_venta: list[dict], matriz_pr
     id: {lista_producto_cantidad[0].get("id_producto")}
     nombre: {producto_encontrado.get("nombre")}
     cantidad: {lista_producto_cantidad[0].get("cantidad")}
+    """
+    print(mensaje)
+
+def mostrar_cliente_con_mas_compras(lista_clientes: list[dict], lista_detalle_venta: list[dict], lista_ventas: list[dict]):
+    cliente_cantidad: list[dict] = []
+    
+    for venta in lista_ventas:
+        ventas_cliente = filtrar_por_clave(lista_ventas, "id_cliente", venta.get("id_cliente"))
+        cantidad = 0
+        for id_venta in ventas_cliente:
+            detalle_por_cliente = filtrar_por_clave(lista_detalle_venta, "id_venta", id_venta.get("id"))
+            for indice_detalle in range(len(detalle_por_cliente)):
+                cantidad += detalle_por_cliente[indice_detalle].get("cantidad")
+        cliente_cantidad.append({
+            "id_cliente": id_venta.get("id_cliente"),
+            "cantidad": cantidad
+        })
+
+    do_bubble_sort(cliente_cantidad, "cantidad", "ninguno", "DES")
+
+    cliente = filtrar_info_dic(lista_clientes, "id", cliente_cantidad[0].get("id_cliente"))
+
+    mensaje = \
+    f"""
+    cliente que mas compras realizo:
+    id: {cliente.get("id")}
+    apellido: {cliente.get("apellido")}
+    nombre: {cliente.get("nombre")}
+    cantidad de compras: {cliente_cantidad[0].get("cantidad")}
     """
     print(mensaje)
