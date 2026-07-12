@@ -1,6 +1,8 @@
 from validaciones import validar_str, validar_int
 from logica import mostrar_info_completa, obtener_valores_unicos, do_bubble_sort
 from ventas import obtener_detalle_ventas_de_una_venta
+from variables import ARCHIVO_CLIENTES
+from archivos import guardar_dataset_dict_archivo
 
 def obtener_ids_clientes(lista_clientes: list[dict]) -> list:
     """
@@ -50,6 +52,7 @@ def cargar_cliente(lista_clientes: list[dict]):
     }
 
     lista_clientes.append(nuevo_cliente)
+    guardar_dataset_dict_archivo(lista_clientes, ARCHIVO_CLIENTES)
     mostrar_info_completa(lista_clientes, "clientes")
 
 def obtener_cliente_por_dato(lista_clientes: list[dict], id: int) -> dict:
@@ -117,6 +120,7 @@ def actualizar_cliente(lista_cliente: list[dict], cliente: dict):
                 "ciudad": cliente.get("ciudad")
             })
             print("cliente actualizado correctamente")
+            guardar_dataset_dict_archivo(lista_cliente, ARCHIVO_CLIENTES)
             mostrar_info_completa(lista_cliente, "clientes")
             break
 
@@ -184,7 +188,7 @@ def borrar_cliente(lista_clientes: list[dict]):
             lista_clientes.pop(fila)
             print("cliente borrado:")
             break
-        
+    guardar_dataset_dict_archivo(lista_clientes, ARCHIVO_CLIENTES)
     mostrar_info_completa(lista_clientes, "clientes")
 
 def mostrar_cliente_por_ciudad(lista_clientes: list[dict]):

@@ -1,6 +1,8 @@
 from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_valores_unicos,\
-      obtener_list_diccionario_productos, filtrar_por_clave
+      obtener_list_diccionario_productos, filtrar_dato_dict, filtrar_por_id_venta
 from validaciones import validar_int, validar_str
+from variables import ARCHIVO_VENTAS, ARCHIVO_PRODUCTOS, ARCHIVO_DETALLE_VENTA
+from archivos import guardar_dataset_dict_archivo
 
 def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int, clave: str) -> list[dict]:
     detalle_ventas = []
@@ -66,7 +68,7 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
 
     for indice_ventas in range(len(lista_ventas)):
         if lista_ventas[indice_ventas].get("id") == input_id:
-            lista_detalle_venta_filtrado = filtrar_por_clave(lista_detalle_ventas, "id_venta", input_id)
+            lista_detalle_venta_filtrado = filtrar_dato_dict(lista_detalle_ventas, filtrar_por_id_venta, input_id)
 
             for indice_detalle in range(len(lista_detalle_venta_filtrado)):
                 producto_encontrado = filtrar_info_dic(dict_productos, "id", lista_detalle_venta_filtrado[indice_detalle].get("id_producto"))
@@ -84,7 +86,9 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
 
             lista_ventas.pop(indice_ventas)
             break
-
+    guardar_dataset_dict_archivo(lista_ventas, ARCHIVO_VENTAS)
+    guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
+    guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)
     mostrar_info_completa(lista_ventas, "ventas")
 
 def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
@@ -144,6 +148,8 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
         "cantidad": input_cantidad
     })
     print("el producto fue agregado correctamente\n")
+    guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)
+    guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
     mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
 
 def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
@@ -160,7 +166,7 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
         print("ERROR: el cliente no existe")
         return
 
-    detalle_venta_encontrados = filtrar_por_clave(lista_detalle_ventas, "id_venta", input_venta_id)
+    detalle_venta_encontrados = filtrar_dato_dict(lista_detalle_ventas, filtrar_por_id_venta, input_venta_id)
     productos = []
     for detalle in detalle_venta_encontrados:
         producto = filtrar_info_dic(dict_productos, "id", detalle.get("id_producto"))
@@ -202,6 +208,8 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
                     lista_detalle_ventas.pop(indice)
                     break
             print("se actualizo la venta correctamente\n")
+            guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)
+            guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
             mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
             return
         
@@ -227,5 +235,7 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
         "cantidad": cantidad
     })
     print("se actualizo la venta correctamente\n")
+    guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)
+    guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
     mostrar_info_completa(lista_detalle_ventas, "detalle_venta")       
 

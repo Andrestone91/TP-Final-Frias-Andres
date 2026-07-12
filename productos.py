@@ -1,6 +1,8 @@
 from validaciones import validar_str, validar_int, validar_float, validar_bool
 from logica import obtener_ids, mostrar_info_completa_matriz, obtener_list_diccionario_productos,\
         do_bubble_sort, obtener_productos_activos, parsear_str_a_booleano, mostrar_info_completa
+from archivos import guardar_matriz_archivo
+from variables import ARCHIVO_PRODUCTOS
 
 def obtener_producto_por_dato(matriz_producto: list[list], columna: int, valor) -> list:
     producto = []
@@ -15,6 +17,10 @@ def obtener_producto_por_dato(matriz_producto: list[list], columna: int, valor) 
 
     return producto
     
+def obtener_cabecera_productos() -> list[str]:
+    cabecera = ["id","nombre","inventario","precio","activo"]
+    return cabecera
+
 def cargar_producto(matriz_producto: list[list]):
     ids = obtener_ids(matriz_producto)
     ids.reverse()
@@ -30,7 +36,10 @@ def cargar_producto(matriz_producto: list[list]):
     nuevo_producto = [nuevo_id, nombre, stock, precio_unitario, activo]
 
     matriz_producto.append(nuevo_producto)
-    print("producto agregado correctamente\n")
+
+    cabecera = obtener_cabecera_productos()
+
+    guardar_matriz_archivo(matriz_producto, cabecera, ARCHIVO_PRODUCTOS)
     mostrar_info_completa_matriz(matriz_producto)
 
 def actualizar_producto(matriz_producto: list[list], producto_modificado: list, id: int):
@@ -41,15 +50,25 @@ def actualizar_producto(matriz_producto: list[list], producto_modificado: list, 
         if matriz_producto[fila][0] == id:
             for columna in range(1, cantidad_columnas):
                 matriz_producto[fila][columna] = producto_modificado[columna]
-    print("el producto fue modificado\n")
+
+    cabecera = obtener_cabecera_productos()
+
+    guardar_matriz_archivo(matriz_producto, cabecera, ARCHIVO_PRODUCTOS)
+
     lista_dict_productos = obtener_list_diccionario_productos(matriz_producto)
     productos_activos = obtener_productos_activos(lista_dict_productos)
+
     mostrar_info_completa(productos_activos, "productos")
 
 def modificar_producto(matriz_producto: list[list]):
     mostrar_info_completa_matriz(matriz_producto)
     input_int = validar_int("ingresar ID del prodcuto a modificar: ")
     producto_a_modificar = obtener_producto_por_dato(matriz_producto, 0, input_int)
+
+    if not producto_a_modificar:
+        print("producto no encontrado")
+        return
+    
     info = f'{producto_a_modificar[0]},{producto_a_modificar[1]},{producto_a_modificar[2]},{producto_a_modificar[3]},'\
         f'{producto_a_modificar[4]}\n'
     if producto_a_modificar:
@@ -85,6 +104,8 @@ def borrar_producto(matriz_producto:list[list]) -> bool:
     input_id = validar_int("ingrese el numero id a dar de baja: ")
     input_modo = validar_str("[logica - fisica]: ")
 
+    cabecera = obtener_cabecera_productos()
+
     match input_modo:
         case "logica":
             for fila in range(len(matriz_producto)):
@@ -99,6 +120,7 @@ def borrar_producto(matriz_producto:list[list]) -> bool:
                     matriz_producto.pop(fila)
                     print("producto borrado\n")
                     dado_de_baja = True
+                   
                     break
         case _:
             print("opcion no valida")
@@ -106,7 +128,9 @@ def borrar_producto(matriz_producto:list[list]) -> bool:
         
     if not dado_de_baja:
          print("no se encontro el producto")
-
+         return
+    
+    guardar_matriz_archivo(matriz_producto, cabecera, ARCHIVO_PRODUCTOS)
     mostrar_info_completa_matriz(matriz_producto)
     return dado_de_baja
 

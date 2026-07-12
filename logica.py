@@ -112,6 +112,7 @@ def mostrar_info_completa_matriz(matriz: list[list]):
         inventario = fila[2]
         precio = fila[3]
         activo = fila[4]
+
         info += f'{id},{nombre},{inventario},{precio},{activo}' + "\n"
 
     print(info)
@@ -143,32 +144,6 @@ def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: st
                 lista_dict[primer_elemento], lista_dict[siguiente_elemento] =\
                 lista_dict[siguiente_elemento],  lista_dict[primer_elemento]
     mostrar_info_completa(lista_dict,  nombre_lista)
-
-# def do_bubble_sort_matriz(matriz: list[list], indice: str, ord: str= 'ASC'):
-#     """
-#     tipo de ordenamiento bubble sort.
-
-#     arg: 
-#         list_dict (list[dict]): contiene la lista de diccionario a ordenar.
-
-#     return
-#         None
-#     """
-#     tamanio_lista = len(matriz)
-
-#     for vueltas in range(tamanio_lista):
-
-#         for primer_elemento in range(0, tamanio_lista - vueltas - 1):
-
-#             siguiente_elemento = primer_elemento + 1
-
-#             if matriz[primer_elemento][indice] > matriz[siguiente_elemento][indice] and ord == 'ASC' or\
-#                 matriz[primer_elemento][indice] < matriz[siguiente_elemento][indice] and ord == 'DES':
-
-#                matriz[primer_elemento], matriz[siguiente_elemento] =\
-#                 matriz[siguiente_elemento], matriz[primer_elemento]
-
-#     mostrar_info_completa_matriz(matriz)
 
 def convertir_valor(valor, tipo: str):
     if tipo == "int":
@@ -262,14 +237,6 @@ def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
 
     return item_dicccionario
 
-def filtrar_por_clave(datos: list[dict], clave: str, valor: int) -> list[dict]:
-    filtrados = []
-
-    for dato in datos:
-        if dato.get(clave) == valor:
-            filtrados.append(dato)
-    return filtrados
-
 
 def filtrar_por_id(dato: dict, valor: int) -> bool:
     return dato.get("id") == valor
@@ -324,3 +291,26 @@ def obtener_productos_activos(lista_productos: list[dict]) -> list[dict]:
         if lista_productos[indice].get("activo"):
             dict_productos.append(lista_productos[indice])
     return dict_productos
+
+def join_lista_a_texto(data: list[str], separador: str):
+    nuevo_texto = ""
+    for palabra in data:
+        nuevo_texto += f"{palabra}{separador}"
+
+    nuevo_texto = nuevo_texto[:-1]
+    return nuevo_texto
+
+def extraer_datos_dict(target: list[str], diccionario: dict, separador: str, tipo_dato: str):
+    if tipo_dato == 'keys':
+        datos = list(diccionario.keys())
+    else:
+        datos = list(diccionario.values())
+    headr = join_lista_a_texto(datos, separador) + '\n'
+    target.append(headr)
+
+def crear_texto_datos(dataset: list[dict]):
+    lista_texto = []
+    extraer_datos_dict(lista_texto, dataset[0], ',', 'keys')
+    for heroe in dataset:
+        extraer_datos_dict(lista_texto, heroe, ',', 'values')
+    return lista_texto

@@ -30,7 +30,7 @@ def validar_str(mensaje: str) -> str:
 
     if not input_str.replace(" ", "").isalpha():
         print("ERROR: ingrese un nombre valido")
-        validar_str(mensaje)
+        return validar_str(mensaje)
 
     return input_str
 
