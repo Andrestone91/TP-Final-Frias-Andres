@@ -35,8 +35,9 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
             apellido = lista_dict[fila].get("apellido")
             nombre = lista_dict[fila].get("nombre")
             ciudad = lista_dict[fila].get("ciudad")
+            activo = lista_dict[fila].get("activo")
 
-            info += f'{id},{apellido},{nombre},{ciudad}' + "\n"
+            info += f'{id},{apellido},{nombre},{ciudad},{activo}' + "\n"
 
         print(info)
 
@@ -237,12 +238,14 @@ def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
 
     return item_dicccionario
 
-
 def filtrar_por_id(dato: dict, valor: int) -> bool:
     return dato.get("id") == valor
 
 def filtrar_por_id_venta(dato: dict, valor: int) -> bool:
     return dato.get("id_venta") == valor
+
+def filtrar_por_activo(dato: dict, valor: str) -> bool:
+    return dato.get("activo") == valor
 
 def filtrar_dato_dict(datos: list[dict], callback, valor: int) -> list[dict]:
     filtrados = []

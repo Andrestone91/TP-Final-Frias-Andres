@@ -1,8 +1,8 @@
-id,apellido,nombre,ciudad
-1,Gomez,Juan,Buenos Aires
-2,Perez,Lucia,Cordoba
-3,Fernandez,Martin,Rosario
-4,Lopez,Carla,Mendoza
-5,Ramirez,Sofia,La Plata
-6,Almiron,Rodri,La Plata
-7,Farias,Ayelen,Cordoba
+id,apellido,nombre,ciudad,activo
+1,Gomez,Juan,Buenos Aires,true
+2,Perez,Lucia,Cordoba,true
+3,Fernandez,Martin,Rosario,true
+4,Lopez,Carla,Mendoza,true
+5,Ramirez,Sofia,La Plata,false
+6,Almiron,Rodri,La Plata,false
+7,Farias,Ayelen,Cordoba,false

@@ -82,17 +82,18 @@ def modificar_cliente(lista_clientes: list[dict]):
     return:
     """
     mostrar_info_completa(lista_clientes, "clientes")
-    tipo_datos: list[str] = ["apellido", "nombre", "ciudad"]
+    tipo_datos: list[str] = ["apellido", "nombre", "ciudad", "activo"]
 
     input_id = validar_int(f"ingrese el ID del cliente a modificar: ")
     cliente = obtener_cliente_por_dato(lista_clientes, input_id)
     
     if len(cliente) > 0:
         print("cliente seleccionado es: ")
-        info = f'{cliente.get("id")},{cliente.get("apellido")},{cliente.get("nombre")},{cliente.get("ciudad")}'
+        info = f'{cliente.get("id")},{cliente.get("apellido")},{cliente.get("nombre")},{cliente.get("ciudad")},{cliente.get("activo")}'
         print(info)
 
-        input_tipo = validar_str(f"ingrese el tipo de dato a modificar [{tipo_datos[0]}-{tipo_datos[1]}-{tipo_datos[2]}]:")
+        input_tipo =\
+              validar_str(f"ingrese el tipo de dato a modificar [{tipo_datos[0]}-{tipo_datos[1]}-{tipo_datos[2]}-{tipo_datos[3]}]:")
         tipo_es_valido = validar_tipo(tipo_datos, input_tipo)
 
         actualizar_un_dato_cliente(cliente, tipo_es_valido, tipo_datos, input_tipo, lista_clientes)
@@ -117,9 +118,10 @@ def actualizar_cliente(lista_cliente: list[dict], cliente: dict):
                 "id": cliente.get("id"),
                 "apellido": cliente.get("apellido"),
                 "nombre": cliente.get("nombre"),
-                "ciudad": cliente.get("ciudad")
+                "ciudad": cliente.get("ciudad"),
+                "activo": cliente.get("activo")
+
             })
-            print("cliente actualizado correctamente")
             guardar_dataset_dict_archivo(lista_cliente, ARCHIVO_CLIENTES)
             mostrar_info_completa(lista_cliente, "clientes")
             break
@@ -138,8 +140,8 @@ def validar_tipo(tipo_lista: list[str], input_tipo: str) -> bool:
 
     if input_tipo == tipo_lista[0] or\
         input_tipo == tipo_lista[1] or\
-        input_tipo == tipo_lista[2]:
-
+        input_tipo == tipo_lista[2] or\
+        input_tipo == tipo_lista[3]:
         return True
     else:
         return False
@@ -166,9 +168,20 @@ def actualizar_un_dato_cliente(cliente: dict, tipo_es_valido: bool, tipo_datos: 
                 cliente.update({tipo_datos[1]: input_valor})
             case "ciudad":
                 cliente.update({tipo_datos[2]: input_valor})
+            case "activo":
+                if input_valor not in ["true", "false"]:
+                    print("eñ tipo es incorrecto")
+                cliente.update({tipo_datos[3]: input_valor})
         actualizar_cliente(lista_clientes, cliente)
     else:
         print(f"el tipo {input_tipo} es incorrecto vuelva a intentar")
+
+def dar_de_baja(input_nuevo_tipo: str):
+    match input_nuevo_tipo:
+        case "logica":
+            pass
+        case "fisica":
+            pass
 
 def borrar_cliente(lista_clientes: list[dict]):
     """

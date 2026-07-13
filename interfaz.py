@@ -5,7 +5,8 @@ from validaciones import validar_opcion
 from mensajes import  mensaje_menu_area_productos, mensaje_menu_ver_productos,\
       mensaje_menu_clientes, mensaje_menu_ver_clientes, mensaje_menu_ventas, mensaje_menu_ver_ventas, mensaje_menu, imprimir_menu,\
           mensaje_menu_salir, mensaje_menu_usuarios, mensaje_menu_informes
-from logica import do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
+from logica import do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor, filtrar_dato_dict,\
+        filtrar_por_activo
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente, mostrar_cliente_por_ciudad
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta, modificar_venta
 from login import iniciar_sesion, cerrar_sesion
@@ -90,7 +91,8 @@ def menu_area_clientes(lista_clientes: list[dict], usuario: dict):
                 case 2:
                     modificar_cliente(lista_clientes)
                 case 3:
-                    menu_ver_clientes(lista_clientes)
+                    lista_clientes_activos = filtrar_dato_dict(lista_clientes, filtrar_por_activo, "true")
+                    menu_ver_clientes(lista_clientes_activos)
                 case 4:
                     borrar_cliente(lista_clientes)
                 case 5:
@@ -281,13 +283,6 @@ def aplicacion():
     lista_usuarios: dict = leer_json(ARCHIVO_USUARIOS)
 
     usuario = {}
-    usuario = {
-            "id": 2,
-            "username": "otro",
-            "password": "1234",
-            "tipo": "admin",
-            "esta_online": False
-        }
     
     run = True
     while run:

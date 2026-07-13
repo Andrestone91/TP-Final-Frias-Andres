@@ -119,8 +119,7 @@ def borrar_producto(matriz_producto:list[list]) -> bool:
                 if matriz_producto[fila][0] == input_id:
                     matriz_producto.pop(fila)
                     print("producto borrado\n")
-                    dado_de_baja = True
-                   
+                    dado_de_baja = True             
                     break
         case _:
             print("opcion no valida")
