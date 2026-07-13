@@ -3,10 +3,10 @@ from archivos import actualizar_lista_json
 from validaciones import validar_int, validar_str, validar_alphanum
 from variables import ARCHIVO_USUARIOS
 
-def mostrar_usuarios(lista_usuarios: list[dict]):
+def mostrar_usuarios(lista_usuarios: dict):
     mostrar_info_completa(lista_usuarios.get("usuarios"), "usuarios")
 
-def borrar_usuario(lista_usuarios: list[dict]):
+def borrar_usuario(lista_usuarios: dict):
     lista_dict_usuarios: list[dict] = lista_usuarios.get("usuarios")
     mostrar_info_completa(lista_dict_usuarios, "usuarios")
 
@@ -20,7 +20,7 @@ def borrar_usuario(lista_usuarios: list[dict]):
 
     mostrar_info_completa(lista_dict_usuarios, "usuarios")
 
-def crear_usuario(lista_usuarios: list[dict]) -> bool:
+def crear_usuario(lista_usuarios: dict) -> bool:
 
     user_valido = False
     password_valido = False
@@ -49,6 +49,10 @@ def crear_usuario(lista_usuarios: list[dict]) -> bool:
      
     input_tipo = validar_str("ingrese el tipo [admin - vendedor]: ")
 
+    if input_tipo not in ["admin", "vendedor"]:
+        print("opcion no valida")
+        return
+    
     ids = obtener_ids_dict(dict_usuarios, "id")
     ids.reverse()
     ultimo_id = ids[0]
@@ -65,7 +69,7 @@ def crear_usuario(lista_usuarios: list[dict]) -> bool:
     mostrar_info_completa(dict_usuarios, "usuarios")
     return True
 
-def editar_usuario(lista_usuarios: list[dict]):
+def editar_usuario(lista_usuarios: dict):
     dict_usuarios = lista_usuarios.get("usuarios")
     mostrar_info_completa(dict_usuarios, "usuarios")
     
@@ -89,6 +93,9 @@ def editar_usuario(lista_usuarios: list[dict]):
                     return
             case "tipo":
                 nuevo_tipo = validar_str("tipo [admin - vendedor]: ")
+                if nuevo_tipo not in ["admin", "vendedor"]:
+                    print("opcion no valida")
+                    return
                 usuario_a_modificar.update({'tipo': nuevo_tipo})
             case _:
                 print("la opcion no coincide, usuario no modificado")

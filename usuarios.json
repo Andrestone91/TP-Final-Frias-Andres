@@ -5,13 +5,27 @@
             "username": "andre",
             "password": "1234",
             "tipo": "admin",
-            "esta_online": true
+            "esta_online": false
         },
         {
             "id": 2,
             "username": "otro",
             "password": "1234",
             "tipo": "vendedor",
+            "esta_online": false
+        },
+        {
+            "id": 3,
+            "username": "Andrestone",
+            "password": "aoskfnaisfnbaisf",
+            "tipo": "admin",
+            "esta_online": false
+        },
+        {
+            "id": 4,
+            "username": "andrt",
+            "password": "ansfnasfnsa",
+            "tipo": "dasdmk",
             "esta_online": false
         }
     ]

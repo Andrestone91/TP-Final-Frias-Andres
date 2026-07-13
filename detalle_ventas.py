@@ -63,5 +63,32 @@ def mostrar_cliente_con_mas_compras(lista_clientes: list[dict], lista_detalle_ve
     """
     print(mensaje)
 
-def mostrar_monto_total_ventas():
-    pass
+def mostrar_monto_total_ventas(lista_detalle_venta: list[dict], matriz_productos: list[list]):
+    dict_productos = obtener_list_diccionario_productos(matriz_productos)
+
+    monto_total = 0
+    for detalle in lista_detalle_venta:
+        producto = filtrar_dato_dict(dict_productos, filtrar_por_id, detalle.get("id_producto"))
+        cantidad = detalle.get("cantidad")
+        monto = producto[0].get("precio") * cantidad
+        monto_total += monto
+
+    mensaje =\
+    f"""
+    monto total de ventas:
+    $ {monto_total}
+    """
+    print(mensaje)
+
+def mostrar_cantidad_productos_vendidos(lista_detalle_venta: list[dict]):
+
+    productos_vendidos_total = 0
+    for detalle in lista_detalle_venta:
+        cantidad = detalle.get("cantidad")
+        productos_vendidos_total += cantidad
+
+    mensaje =\
+    f"""
+    cantidad de productos vendidos: {productos_vendidos_total}
+    """
+    print(mensaje)

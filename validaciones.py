@@ -1,6 +1,6 @@
 from logica import parsear_str_a_booleano
-def validar_opcion(op_min:str, op_max:str) -> int:
 
+def validar_opcion(op_min:str, op_max:str) -> int:
     """
     valida la opcion seleccionada
 

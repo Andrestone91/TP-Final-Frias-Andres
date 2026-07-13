@@ -8,9 +8,10 @@ from mensajes import  mensaje_menu_area_productos, mensaje_menu_ver_productos,\
 from logica import do_bubble_sort, parsear_dataset_producto_matriz, parsear_dataset_lidict, parsear_dict_valor
 from clientes import cargar_cliente, modificar_cliente, borrar_cliente, mostrar_cliente_por_ciudad
 from ventas import cargar_venta, mostrar_info_completa_ventas, borrar_venta, modificar_venta
-from login import iniciar_sesion
+from login import iniciar_sesion, cerrar_sesion
 from usuarios import mostrar_usuarios, borrar_usuario, crear_usuario, editar_usuario
-from detalle_ventas import mostrar_productos_cantidad_ventas, mostrar_cliente_con_mas_compras
+from detalle_ventas import mostrar_productos_cantidad_ventas, mostrar_cliente_con_mas_compras, mostrar_monto_total_ventas,\
+    mostrar_cantidad_productos_vendidos
 from productos import cargar_producto, modificar_producto, borrar_producto, ver_productos_ord
 
 def menu_area_productos(matriz_productos: list[list], usuario: dict):
@@ -181,7 +182,7 @@ def menu_ver_ventas(matriz_productos: list[list], lista_clientes: list[dict], li
             case 3:
                 run = False
 
-def menu_area_usuarios(lista_usuarios: list[dict], usuario: dict):
+def menu_area_usuarios(lista_usuarios: dict, usuario: dict):
     """
     menu para area de usuarios
 
@@ -232,9 +233,9 @@ def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict], matriz_pr
                 case 3:
                     mostrar_cliente_con_mas_compras(lista_clientes, lista_detalle_venta, lista_ventas)
                 case 4:
-                    pass
+                    mostrar_monto_total_ventas(lista_detalle_venta, matriz_productos)
                 case 5:
-                    pass
+                    mostrar_cantidad_productos_vendidos(lista_detalle_venta)
                 case 6:
                     run = False
     else:
@@ -277,7 +278,7 @@ def aplicacion():
     dict_detalle_venta_parseado = parsear_dict_valor(
         ["id", "id_venta", "id_producto", "cantidad"], [int, int, int, int], dict_detalle_venta)
     
-    lista_usuarios: list[dict] = leer_json(ARCHIVO_USUARIOS)
+    lista_usuarios: dict = leer_json(ARCHIVO_USUARIOS)
 
     usuario = {}
     usuario = {
@@ -314,6 +315,7 @@ def aplicacion():
                 menu_area_informes(usuario, dict_detalle_venta_parseado, matriz_productos, dict_clientes_parseado, dict_ventas_parseado)
             case 6:
                 run = False
+                cerrar_sesion(lista_usuarios, usuario.get("id"))
                 print("cerrando programa...")
 
         os.system("pause")

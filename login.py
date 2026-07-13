@@ -1,5 +1,5 @@
 from variables import ARCHIVO_USUARIOS
-from archivos import leer_json
+from archivos import leer_json, actualizar_lista_json
 
 def iniciar_sesion(usuario: dict):
     """
@@ -18,7 +18,7 @@ def iniciar_sesion(usuario: dict):
         input_usuario = input("nombre de usuario: ")
         input_password = input("contraseña: ")
 
-        usuario_encontrado = buscar_usuario(informacion_usuarios.get("usuarios"), input_usuario, input_password)
+        usuario_encontrado = buscar_usuario(informacion_usuarios, input_usuario, input_password)
 
         if usuario_encontrado:
             usuario = usuario_encontrado
@@ -30,7 +30,7 @@ def iniciar_sesion(usuario: dict):
 
     return usuario  
 
-def buscar_usuario(dict_usuarios: dict, input_usuario: str, input_password: str) -> bool:
+def buscar_usuario(dict_usuarios: dict, input_usuario: str, input_password: str) -> dict:
     """
     busca el usuario mediante el input, en caso que las credenciales sean validas devuuelve true, de lo contrario false
 
@@ -41,9 +41,12 @@ def buscar_usuario(dict_usuarios: dict, input_usuario: str, input_password: str)
     return:
         bool
     """
-    for usuario in dict_usuarios:
-        if usuario.get("username") == input_usuario and usuario.get("password") == input_password:
-            return usuario
+    lista_usuarios = dict_usuarios.get("usuarios")
+    for indice in range(len(lista_usuarios)):
+        if lista_usuarios[indice].get("username") == input_usuario and lista_usuarios[indice].get("password") == input_password:
+            lista_usuarios[indice].update({"esta_online": True})
+            actualizar_lista_json(ARCHIVO_USUARIOS, dict_usuarios)
+            return lista_usuarios[indice]
 
 def manejo_intentos(contador_intentos: int, intentos: int) -> bool:
     """
@@ -60,3 +63,10 @@ def manejo_intentos(contador_intentos: int, intentos: int) -> bool:
         return False
     print("vuelva a intentar")
     return True
+
+def cerrar_sesion(dict_usuarios: dict, id: int):
+    lista_usuarios = dict_usuarios.get("usuarios")
+    for indice in range(len(lista_usuarios)):
+        if lista_usuarios[indice].get("id") == id:
+             lista_usuarios[indice].update({"esta_online": False})
+    actualizar_lista_json(ARCHIVO_USUARIOS, dict_usuarios)
