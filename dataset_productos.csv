@@ -4,8 +4,8 @@ id,nombre,inventario,precio,activo
 3,Arroz,30,2100.0,true
 4,Aceite,18,3200.0,true
 5,Leche,50,1700.0,true
-6,Fideos,35,1600.0,true
-7,Lavandina,20,1900.0,false
-8,Shampoo,15,4800.0,false
-9,Galletitas,28,1400.0,false
-10,Alfajor,60,800.0,false
+6,Fideos,35,1600.0,false
+7,Lavandina,20,1900.0,true
+8,Shampoo,15,4800.0,true
+9,Galletitas,28,1400.0,true
+10,Alfajor,60,800.0,true

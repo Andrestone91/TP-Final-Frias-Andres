@@ -76,7 +76,7 @@ def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: l
     return:
     """
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
-
+    dict_productos_activos = filtrar_dato_dict(dict_productos, filtrar_por_activo, "true")
     lista_ids_unicos_detalle_ventas = obtener_valores_unicos(lista_detalle_ventas, "id_venta")
     lista_detalle_final: list[dict] = []
 
@@ -84,7 +84,7 @@ def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: l
         venta = filtrar_info_dic(lista_ventas, "id", id_venta)
         cliente = filtrar_info_dic(lista_clientes, "id", venta.get("id_cliente"))
         
-        monto_total = obtener_monto_total(id_venta, lista_detalle_ventas, dict_productos)
+        monto_total = obtener_monto_total(id_venta, lista_detalle_ventas, dict_productos_activos)
 
         lista_detalle_final.append({
             "id_venta": id_venta,
@@ -109,27 +109,36 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
     mostrar_info_completa(lista_ventas, "ventas")
     input_id = validar_int("ingrese el numero id a borrar: ")
+    input_activo = validar_str("[logica - fisica]: ")
 
+    if input_activo not in ["logica", "fisica"]:
+        print("opcion no valida")
+        return
+    
     for indice_ventas in range(len(lista_ventas)):
         if lista_ventas[indice_ventas].get("id") == input_id:
             lista_detalle_venta_filtrado = filtrar_dato_dict(lista_detalle_ventas, filtrar_por_id_venta, input_id)
 
-            for indice_detalle in range(len(lista_detalle_venta_filtrado)):
-                producto_encontrado = filtrar_info_dic(dict_productos, "id", lista_detalle_venta_filtrado[indice_detalle].get("id_producto"))
-                for producto in dict_productos:
-                    if producto_encontrado.get("id") == producto.get("id"):
-                        stock_actual = producto.get("stock")
-                        cantidad_en_detalle_venta = lista_detalle_venta_filtrado[indice_detalle].get("cantidad")
-                        producto.update({"stock": stock_actual + cantidad_en_detalle_venta})
-                        break
-                    
-                for indice in range(len(lista_detalle_ventas)):
-                    if lista_detalle_ventas[indice].get("id") == lista_detalle_venta_filtrado[indice_detalle].get("id"):
-                        lista_detalle_ventas.pop(indice)
-                        break
+            match input_activo:
+                case "logica":
+                    lista_ventas[indice_ventas].update({"activo": False})
+                case "fisica":
+                    for indice_detalle in range(len(lista_detalle_venta_filtrado)):
+                        producto_encontrado = filtrar_info_dic(dict_productos, "id", lista_detalle_venta_filtrado[indice_detalle].get("id_producto"))
+                        for producto in dict_productos:
+                            if producto_encontrado.get("id") == producto.get("id"):
+                                stock_actual = producto.get("stock")
+                                cantidad_en_detalle_venta = lista_detalle_venta_filtrado[indice_detalle].get("cantidad")
+                                producto.update({"stock": stock_actual + cantidad_en_detalle_venta})
+                                break
+                            
+                        for indice in range(len(lista_detalle_ventas)):
+                            if lista_detalle_ventas[indice].get("id") == lista_detalle_venta_filtrado[indice_detalle].get("id"):
+                                lista_detalle_ventas.pop(indice)
+                                break
 
-            lista_ventas.pop(indice_ventas)
-            break
+                    lista_ventas.pop(indice_ventas)
+                    break
     guardar_dataset_dict_archivo(lista_ventas, ARCHIVO_VENTAS)
     guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
     guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)

@@ -99,8 +99,9 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
             nombre = lista_dict[fila].get("nombre")
             stock = lista_dict[fila].get("stock")
             precio = lista_dict[fila].get("precio")
+            activo = lista_dict[fila].get("activo")
 
-            info += f"{id},{nombre},{stock},{precio}\n"
+            info += f"{id},{nombre},{stock},{precio},{activo}\n"
 
         print(info)
 
@@ -304,7 +305,6 @@ def parsear_dataset_producto_matriz(datos: list[str]) -> list[list]:
         datos_linea[0] = parsear_str_a_int(datos_linea[0]) 
         datos_linea[2] = parsear_str_a_int(datos_linea[2]) 
         datos_linea[3] = parsear_str_a_float(datos_linea[3]) 
-        datos_linea[4] = parsear_str_a_booleano(datos_linea[4]) 
         
         mi_matriz.append(datos_linea)
     return mi_matriz
@@ -490,24 +490,6 @@ def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict
         })
 
     return lista_productos
-
-def obtener_productos_activos(lista_productos: list[dict]) -> list[dict]:
-    """
-    filtra los productos activos
-
-    arg: 
-        lista_productos (list[dict]): contiene la lista de productos en formato de diccionario.
-
-    return:
-        dict_productos: lista de diccionarios con productos activos
-    """
-
-    dict_productos = []
-    for indice in range(len(lista_productos)):
-
-        if lista_productos[indice].get("activo"):
-            dict_productos.append(lista_productos[indice])
-    return dict_productos
 
 def join_lista_a_texto(data: list[str], separador: str) -> str:
     """

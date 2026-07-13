@@ -1,6 +1,6 @@
 from validaciones import validar_str, validar_int, validar_float, validar_bool
 from logica import obtener_ids, mostrar_info_completa_matriz, obtener_list_diccionario_productos,\
-        do_bubble_sort, obtener_productos_activos, mostrar_info_completa
+        do_bubble_sort, mostrar_info_completa, filtrar_dato_dict, filtrar_por_activo
 from archivos import guardar_matriz_archivo
 from variables import ARCHIVO_PRODUCTOS
 
@@ -94,9 +94,9 @@ def actualizar_producto(matriz_producto: list[list], producto_modificado: list, 
     guardar_matriz_archivo(matriz_producto, cabecera, ARCHIVO_PRODUCTOS)
 
     lista_dict_productos = obtener_list_diccionario_productos(matriz_producto)
-    productos_activos = obtener_productos_activos(lista_dict_productos)
+    productos_activos = filtrar_dato_dict(lista_dict_productos, filtrar_por_activo, "true")
 
-    mostrar_info_completa(productos_activos, "productos")
+    mostrar_info_completa(lista_dict_productos, "productos")
 
 def modificar_producto(matriz_producto: list[list]):
     """
@@ -200,5 +200,5 @@ def ver_productos_ord(matriz_producto: list[list], clave: str, ord: str):
     return:
     """
     lista_dict_productos = obtener_list_diccionario_productos(matriz_producto)
-    productos_activos = obtener_productos_activos(lista_dict_productos)
+    productos_activos = filtrar_dato_dict(lista_dict_productos, filtrar_por_activo, "true")
     do_bubble_sort(productos_activos, clave, "productos", ord)
