@@ -1,5 +1,5 @@
 from logica import do_bubble_sort, mostrar_info_completa, filtrar_info_dic, obtener_valores_unicos,\
-      obtener_list_diccionario_productos, filtrar_dato_dict, filtrar_por_id_venta
+      obtener_list_diccionario_productos, filtrar_dato_dict, filtrar_por_id_venta, filtrar_por_activo
 from validaciones import validar_int, validar_str
 from variables import ARCHIVO_VENTAS, ARCHIVO_PRODUCTOS, ARCHIVO_DETALLE_VENTA
 from archivos import guardar_dataset_dict_archivo
@@ -93,7 +93,6 @@ def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: l
             "nombre":cliente.get("nombre"),
             "monto_total": monto_total
         })
-
     do_bubble_sort(lista_detalle_final, clave, "lista_detalle_final", ord)
         
 def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list]):
@@ -150,14 +149,15 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
     return:
     """
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
+    nfo_completa_activos = filtrar_dato_dict(lista_ventas, filtrar_por_activo, "true")
+    mostrar_info_completa(nfo_completa_activos, "ventas")
 
-    mostrar_info_completa(lista_ventas, "ventas")
     input_venta_id = validar_int("seleccione el ID de la venta para cargar un producto: ")
-    ids_ventas = obtener_valores_unicos(lista_ventas, "id")
+    ids_ventas = obtener_valores_unicos(nfo_completa_activos, "id")
 
     for id in ids_ventas:
         if input_venta_id not in ids_ventas:
-            print("la venta no existe")
+            print("la venta no existe o no disponible")
             return
 
     mostrar_info_completa(dict_productos, "productos")
@@ -183,7 +183,7 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
             producto.update({"stock": stock - input_cantidad})
             break
 
-    venta_seleccionado = filtrar_info_dic(lista_ventas, "id", input_venta_id)
+    venta_seleccionado = filtrar_info_dic(nfo_completa_activos, "id", input_venta_id)
     cliente = filtrar_info_dic(lista_clientes, "id", venta_seleccionado.get("id_cliente"))
 
     if not cliente:
@@ -259,6 +259,21 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
                 print("cantidad supera el limite disponible")
                 return
             
+            validacion_activo = True
+
+            while validacion_activo:
+                input_activo = validar_str("ingrese si esta activo [true - false]: ")
+
+                if input_activo not in ["true", "false"]:
+                    print("opcion no valida")
+                else:
+                    validacion_activo = False 
+
+            for venta in lista_ventas:
+                if venta.get("id") == detalle.get("id_venta"):
+                    venta.update({"activo": input_activo})
+                    break
+
             for producto in dict_productos:
                 if producto.get("id") == producto_filtrado.get("id"):
                     stock_anterior = stock + detalle.get("cantidad")
@@ -276,6 +291,7 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
             print("se actualizo la venta correctamente\n")
             guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)
             guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
+            guardar_dataset_dict_archivo(lista_ventas, ARCHIVO_VENTAS)
             mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
             return
         
@@ -300,8 +316,10 @@ def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], 
         "id_producto": producto_filtrado.get("id"),
         "cantidad": cantidad
     })
-    print("se actualizo la venta correctamente\n")
+    
     guardar_dataset_dict_archivo(lista_detalle_ventas, ARCHIVO_DETALLE_VENTA)
     guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
+    guardar_dataset_dict_archivo(lista_ventas, ARCHIVO_VENTAS)
+    print("se actualizo la venta correctamente\n")
     mostrar_info_completa(lista_detalle_ventas, "detalle_venta")       
 

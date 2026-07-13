@@ -352,7 +352,7 @@ def parsear_str_a_booleano(texto: str) -> bool:
 
 def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
     """
-    filtra información de un diccionario
+    filtra información de un solo dato en el diccionario
 
     arg: 
         lista (list[dict]): contiene la lista de diccionarios a filtrar.
@@ -409,14 +409,15 @@ def filtrar_por_activo(dato: dict, valor: str) -> bool:
 
 def filtrar_dato_dict(datos: list[dict], callback, valor: int) -> list[dict]:
     """
-    filtra un cliente por su ID
+    filtra un dato del diccionario
 
     arg: 
-        dato (dict): contiene el diccionario a filtrar.
-        valor (int): el ID a filtrar.
+        datos (list[dict]): contiene el diccionario a filtrar.
+        valor (int): valor a filtrar.
+        callback (function): función de filtrado a utilizar.
         
     return:
-        lista_filtrada: lista de diccionarios filtrados
+        filtrados: lista de diccionarios filtrados
     """
 
     filtrados = []
