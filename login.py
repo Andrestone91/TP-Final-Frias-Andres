@@ -1,5 +1,6 @@
 from variables import ARCHIVO_USUARIOS
 from archivos import leer_json, actualizar_lista_json
+from validaciones import validar_str, validar_alphanum
 
 def iniciar_sesion(usuario: dict):
     """
@@ -15,8 +16,8 @@ def iniciar_sesion(usuario: dict):
     run_login = True
 
     while run_login:      
-        input_usuario = input("nombre de usuario: ")
-        input_password = input("contraseña: ")
+        input_usuario = validar_str("nombre de usuario: ")
+        input_password = validar_alphanum("contraseña: ")
 
         usuario_encontrado = buscar_usuario(informacion_usuarios, input_usuario, input_password)
 
@@ -32,14 +33,15 @@ def iniciar_sesion(usuario: dict):
 
 def buscar_usuario(dict_usuarios: dict, input_usuario: str, input_password: str) -> dict:
     """
-    busca el usuario mediante el input, en caso que las credenciales sean validas devuuelve true, de lo contrario false
+    busca el usuario en el datasets mediante usuario y password
 
     arg: 
         usuarios (dict): usuarios en diccionario
         input_usuario (str): usuario ingreado
         input_password (str): password ingresado
+
     return:
-        bool
+        lista_usuarios[indice]: devuelve el usuario encontrado, de lo contrario None
     """
     lista_usuarios = dict_usuarios.get("usuarios")
     for indice in range(len(lista_usuarios)):
@@ -55,6 +57,7 @@ def manejo_intentos(contador_intentos: int, intentos: int) -> bool:
     arg: 
         contador_intentos (int): acomulador de intentos que se fue realizando
         intentos (int): maximo numero de intentos
+        
     return:
         bool
     """
@@ -65,6 +68,15 @@ def manejo_intentos(contador_intentos: int, intentos: int) -> bool:
     return True
 
 def cerrar_sesion(dict_usuarios: dict, id: int):
+    """
+    cierra la sesion del usuario
+
+    arg: 
+        dict_usuarios (dict): contiene los usuarios en diccionario
+        id (int): id del usuario que se va a cerrar sesion
+
+    return:
+    """
     lista_usuarios = dict_usuarios.get("usuarios")
     for indice in range(len(lista_usuarios)):
         if lista_usuarios[indice].get("id") == id:

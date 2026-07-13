@@ -5,6 +5,17 @@ from variables import ARCHIVO_VENTAS, ARCHIVO_PRODUCTOS, ARCHIVO_DETALLE_VENTA
 from archivos import guardar_dataset_dict_archivo
 
 def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: int, clave: str) -> list[dict]:
+    """
+    obtiene una lista de detalle de ventas de una venta en formato diccionario mediante su ID
+
+    arg: 
+        lista_detalle_ventas (list[dict]): contiene la lista de detalle de ventas en formato de diccionario
+        id (int): id de la venta a buscar
+        clave (str): clave por la cual se va a filtrar
+
+    return:
+        detalle_ventas (list[dict]): contiene el detalle de ventas de una venta en formato de lista de diccionarios
+    """
     detalle_ventas = []
 
     for detalle in lista_detalle_ventas:
@@ -13,6 +24,16 @@ def obtener_detalle_ventas_de_una_venta(lista_detalle_ventas: list[dict], id: in
     return detalle_ventas
 
 def obtener_precio(id_producto: int, lista_dict_productos: list[dict]) -> float:
+    """
+    obtiene el precio de un producto mediante su ID
+
+    arg: 
+        id_producto (int): id del producto a buscar
+        lista_dict_productos (list[dict]): contiene la lista de productos en formato de diccionario
+
+    return:
+        precio (float): devuelve el precio del producto
+    """
     precio = 0
     for producto in lista_dict_productos:
         if producto.get("id") == id_producto:
@@ -20,6 +41,17 @@ def obtener_precio(id_producto: int, lista_dict_productos: list[dict]) -> float:
     return precio
 
 def obtener_monto_total(id_venta: int, lista_detalle_ventas: list[dict], lista_dict_productos: list[dict]) -> float:
+    """
+    obtiene el monto total de una venta mediante su ID
+
+    arg: 
+        id_venta (int): id de la venta a buscar
+        lista_detalle_ventas (list[dict]): contiene la lista de detalle de ventas en formato de diccionario
+        lista_dict_productos (list[dict]): contiene la lista de productos en formato de diccionario
+
+    return:
+        monto_total (float): devuelve el monto total de la venta
+    """
     total = 0
     for detalle in lista_detalle_ventas:
         if detalle.get("id_venta") == id_venta:
@@ -30,7 +62,19 @@ def obtener_monto_total(id_venta: int, lista_detalle_ventas: list[dict], lista_d
 
 def mostrar_info_completa_ventas(matriz_productos: list[list], lista_clientes: list[dict], lista_ventas: list[dict],
                                  lista_detalle_ventas: list[dict], clave: str, ord: str):
-    
+    """
+    muestra la informacion completa de las ventas
+
+    arg: 
+        matriz_productos (list[list]): contiene la matriz de productos
+        lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario
+        lista_ventas (list[dict]): contiene la lista de ventas en formato de diccionario
+        lista_detalle_ventas (list[dict]): contiene la lista de detalle de ventas en formato de diccionario
+        clave (str): clave por la cual se va a ordenar
+        ord (str): orden ASC o DES
+
+    return:
+    """
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
 
     lista_ids_unicos_detalle_ventas = obtener_valores_unicos(lista_detalle_ventas, "id_venta")
@@ -59,6 +103,7 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
     arg: 
         lista_clientes (list[dict]): contiene la lista clientes en formato diccionario.
         lista_detalle_ventas (list[dict]): contiene la lista detalle de venta en formato diccionario
+        matriz_productos (list[list]): contiene la matriz de productos
         
     return:
     """
@@ -93,7 +138,17 @@ def borrar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
 
 def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
                   lista_clientes: list[dict]):
-    
+    """
+    agrega una nueva venta a la lista de ventas
+
+    arg: 
+        lista_ventas (list[dict]): contiene la lista de ventas en formato de diccionario.
+        lista_detalle_ventas (list[dict]): contiene la lista de detalle de ventas en formato de diccionario.
+        matriz_productos (list[list]): contiene la matriz de productos
+        lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario.
+
+    return:
+    """
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
 
     mostrar_info_completa(lista_ventas, "ventas")
@@ -154,6 +209,17 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
 
 def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
                         lista_clientes: list[dict]):
+    """
+    modifica una venta
+
+    arg: 
+        lista_ventas (list[dict]): contiene la lista de ventas en formato de diccionario.
+        lista_detalle_ventas (list[dict]): contiene la lista de detalle de ventas en formato de diccionario.
+        matriz_productos (list[list]): contiene la matriz de productos
+        lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario.
+
+    return:
+    """
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
 
     mostrar_info_completa(lista_ventas, "ventas")

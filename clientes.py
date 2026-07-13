@@ -195,16 +195,64 @@ def borrar_cliente(lista_clientes: list[dict]):
 
     mostrar_info_completa(lista_clientes, "clientes")
     input_id = validar_int("ingrese el numero id a borrar: ")
+    cliente = obtener_cliente_por_dato(lista_clientes, input_id) 
 
-    for fila in range(len(lista_clientes)):
-        if lista_clientes[fila].get("id") == input_id:
-            lista_clientes.pop(fila)
-            print("cliente borrado:")
-            break
-    guardar_dataset_dict_archivo(lista_clientes, ARCHIVO_CLIENTES)
-    mostrar_info_completa(lista_clientes, "clientes")
+    if not cliente:
+        print("el cliente no existe")
+        return
+    
+    print("el cliente seleccionado es\n")
+    info = f'{cliente.get("id")},{cliente.get("nombre")},{cliente.get("ciudad")},{cliente.get("activo")}'
+    print(info)
+    input_nuevo_tipo = validar_str("borrar modo [logica - fisica]: ")
+    se_borro = confirmar_baja_cliente(input_nuevo_tipo, lista_clientes, cliente, input_id)
+    if se_borro:
+        guardar_dataset_dict_archivo(lista_clientes, ARCHIVO_CLIENTES)
+        mostrar_info_completa(lista_clientes, "clientes")
+        return
+    else:
+        ("cliente no actualizado")
+        return
+
+
+def confirmar_baja_cliente(input_nuevo_tipo: str, lista_clientes: list[dict], cliente: dict, input_id: int) -> bool:
+    """
+    confirma la baja de un cliente
+
+    arg: 
+        lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario.
+        cliente (dicr): el cliente que se va a dar de baja.
+        input_nuevo_tipo (str): el tipo de baja que se va a realizar.
+        
+    return:
+    """
+    match input_nuevo_tipo:
+        case "logica":
+            cliente.update({"activo": False})       
+        case "fisica":
+            input_confirmar = validar_str("seguro que quiere borrar permanentemente el cliente? [si - no]: ")
+            if input_confirmar == "si":
+                for indice in range(len(lista_clientes)):
+                    if lista_clientes[indice].get("id") == input_id:
+                        lista_clientes.pop(indice)
+                        break
+            else:
+                print("cancelado")
+                return False
+            
+    actualizar_cliente(lista_clientes, cliente)
+    return True
 
 def mostrar_cliente_por_ciudad(lista_clientes: list[dict]):
+    """
+    muestra los clientes de una ciudad específica 
+
+    arg: 
+        lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario.
+        
+    return:
+    """
+
     ciudades = obtener_valores_unicos(lista_clientes, "ciudad")
     info_ciudad = ""
     for ciudad in ciudades:

@@ -52,6 +52,7 @@ def ver_productos(matriz_productos: list[list]):
     menu para ver productos
 
     arg: 
+        matriz_productos (list[list]): contiene la matriz de productos
         
     return
     """
@@ -189,6 +190,7 @@ def menu_area_usuarios(lista_usuarios: dict, usuario: dict):
     menu para area de usuarios
 
     arg:
+      lista_usuarios (dict): lista de usuarios
       usuario (dict): usuario en json
       
     return
@@ -218,8 +220,12 @@ def menu_area_informes(usuario: dict, lista_detalle_venta: list[dict], matriz_pr
     menu para area de informes
 
     arg:
-      
-      
+      usuario (dict): usuario en json
+      lista_detalle_venta (list[dict]): contiene la lista de detalle de ventas en formato de diccionario.
+      matriz_productos (list[list]): contiene la matriz de productos.
+      lista_clientes (list[dict]): contiene la lista de clientes en formato de diccionario.
+      lista_ventas (list[dict]): contiene la lista de ventas en formato de diccionario.
+
     return
     """
     if usuario.get("tipo") == "admin":

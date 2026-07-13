@@ -26,6 +26,15 @@ def validar_opcion(op_min:str, op_max:str) -> int:
         return int(input_str)
     
 def validar_str(mensaje: str) -> str:
+    """
+    valida que el input sea un string
+
+    arg: 
+        mensaje (str): mensaje a mostrar al usuario
+
+    return:
+        input_str (str): devuelve el string ingresado por el usuario
+    """
     input_str = input(mensaje)
 
     if not input_str.replace(" ", "").isalpha():
@@ -35,6 +44,15 @@ def validar_str(mensaje: str) -> str:
     return input_str
 
 def validar_alphanum(mensaje: str) -> str:
+    """
+    valida que el input sea alfanumerico
+
+    arg: 
+        mensaje (str): mensaje a mostrar al usuario
+
+    return:
+        input_str (str): devuelve el string ingresado por el usuario
+    """
     input_str = input(mensaje)
 
     if not input_str.isalnum():
@@ -44,6 +62,16 @@ def validar_alphanum(mensaje: str) -> str:
     return input_str
 
 def validar_int(mensaje: str) -> int:
+    """
+    valida que el input sea un numero entero
+
+    arg: 
+        mensaje (str): mensaje a mostrar al usuario
+
+    return:
+        input_int (int): devuelve el numero ingresado por el usuario
+    """
+
     input_str = input(mensaje)
     input_int = None
 
@@ -57,6 +85,15 @@ def validar_int(mensaje: str) -> int:
         return int(input_str)
 
 def validar_float(mensaje: str) -> float:
+    """
+    valida que el input sea un numero decimal
+
+    arg: 
+        mensaje (str): mensaje a mostrar al usuario
+
+    return:
+        input_float (float): devuelve el numero ingresado por el usuario
+    """
     input_str = input(mensaje)
     input_float = None
 
@@ -70,6 +107,15 @@ def validar_float(mensaje: str) -> float:
         return float(input_str)
     
 def validar_bool(mensaje: str) -> bool:
+    """
+    valida que el input sea un booleano
+
+    arg: 
+        mensaje (str): mensaje a mostrar al usuario
+
+    return:
+        input_bool (bool): devuelve el booleano ingresado por el usuario
+    """
     input_str = input(mensaje)
 
     if input_str not in ('true', 'false'):

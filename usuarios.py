@@ -4,9 +4,25 @@ from validaciones import validar_int, validar_str, validar_alphanum
 from variables import ARCHIVO_USUARIOS
 
 def mostrar_usuarios(lista_usuarios: dict):
+    """
+    muestra la lista de usuarios
+
+    arg:
+        lista_usuarios (dict): contiene la lista de usuarios en formato de diccionario.
+
+    return:
+    """
     mostrar_info_completa(lista_usuarios.get("usuarios"), "usuarios")
 
 def borrar_usuario(lista_usuarios: dict):
+    """
+    borra un usuario de la lista
+
+    arg:
+        lista_usuarios (dict): contiene la lista de usuarios en formato de diccionario.
+
+    return:
+    """
     lista_dict_usuarios: list[dict] = lista_usuarios.get("usuarios")
     mostrar_info_completa(lista_dict_usuarios, "usuarios")
 
@@ -21,7 +37,15 @@ def borrar_usuario(lista_usuarios: dict):
     mostrar_info_completa(lista_dict_usuarios, "usuarios")
 
 def crear_usuario(lista_usuarios: dict) -> bool:
+    """
+    crea un nuevo usuario y lo agrega a la lista de usuarios
 
+    arg:
+        lista_usuarios (dict): contiene la lista de usuarios en formato de diccionario.
+
+    return:
+        bool: devuelve true si se creo el usuario, de lo contrario false
+    """
     user_valido = False
     password_valido = False
     dict_usuarios: list[dict] = lista_usuarios.get("usuarios")
@@ -70,6 +94,14 @@ def crear_usuario(lista_usuarios: dict) -> bool:
     return True
 
 def editar_usuario(lista_usuarios: dict):
+    """
+    edita un usuario de la lista
+
+    arg:
+        lista_usuarios (dict): contiene la lista de usuarios en formato de diccionario.
+
+    return:
+    """
     dict_usuarios = lista_usuarios.get("usuarios")
     mostrar_info_completa(dict_usuarios, "usuarios")
     
@@ -105,7 +137,6 @@ def editar_usuario(lista_usuarios: dict):
         print("[SYSTEM] -- el id seleccionado no existe --")
 
 def actualizar_usuario(lista_usuarios: list[dict], usuario: dict):
-
     """
     actualiza la lista de usuario
 

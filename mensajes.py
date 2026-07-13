@@ -3,6 +3,7 @@ def mensaje_menu_principal(usuario: dict):
     muestra las opciones disponibles del menu principal
 
     arg: 
+        usuario (dict): contiene los datos del usuario logueado
         
     return:
     """
@@ -189,6 +190,7 @@ def mensaje_menu(usuario: dict):
     muestra las opciones disponibles para ver ventas
 
     arg: 
+        usuario (dict): contiene los datos del usuario logueado
         
     return:
     
@@ -217,4 +219,12 @@ def mensaje_menu_salir() -> str:
     return mensaje
 
 def imprimir_menu(menu: str):
+    """
+    imprime el menu
+
+    arg: 
+        menu (str): contiene el menu a imprimir
+
+    return:
+    """
     print(menu)

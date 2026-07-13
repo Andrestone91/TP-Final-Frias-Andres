@@ -1,4 +1,13 @@
 def crear_matriz(filas: int) -> list[list]:
+    """
+    crea una matriz vacía con la cantidad de filas especificada
+
+    arg: 
+        filas (int): cantidad de filas para la matriz
+        
+    return:
+        list[list]: matriz vacía
+    """ 
     matriz = []
 
     for fila in range(filas):
@@ -7,6 +16,15 @@ def crear_matriz(filas: int) -> list[list]:
     return matriz
 
 def obtener_ids(matriz_productos: list[list]) -> list:
+    """
+    obtiene los IDs de los productos en la matriz
+
+    arg: 
+        matriz_productos (list[list]): contiene la matriz de productos.
+        
+    return:
+        lista_ids: lista de id de productos
+    """
     lista_ids = []
 
     cantidad_filas = len(matriz_productos)
@@ -22,6 +40,7 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
 
     arg: 
         lista_dict (list[dict]): contiene la lista en formato de diccionario.
+        nombre_lista (str): nombre de la lista para mostrar la información correspondiente.
         
     return:
         None
@@ -106,6 +125,15 @@ def mostrar_info_completa(lista_dict: list[dict], nombre_lista: str):
         print(info)
 
 def mostrar_info_completa_matriz(matriz: list[list]):
+    """
+    muestra la inforamcion completa de una matriz
+
+    arg: 
+        matriz (list[list]): contiene la matriz de datos.
+
+    return:
+    """
+    
     info = ''
     for fila in matriz:
         id = fila[0]
@@ -124,6 +152,9 @@ def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: st
 
     arg: 
         list_dict (list[dict]): contiene la lista de diccionario a ordenar.
+        tipo (str): clave del diccionario por la cual se ordenará.
+        nombre_lista (str): nombre de la lista para mostrar la información correspondiente.
+        ord (str): criterio de ordenamiento.
 
     return
         None
@@ -147,6 +178,17 @@ def do_bubble_sort(lista_dict: list[dict], tipo: str, nombre_lista: str, ord: st
     mostrar_info_completa(lista_dict,  nombre_lista)
 
 def convertir_valor(valor, tipo: str):
+    """
+    convierte un valor a un tipo especifico
+
+    arg: 
+        valor (str): el valor a convertir.
+        tipo (str): el tipo al que se desea convertir.
+
+    return:
+        valor convertido al tipo especificado
+    """
+
     if tipo == "int":
         return parsear_str_a_int(valor)
     if tipo == "float":
@@ -154,6 +196,16 @@ def convertir_valor(valor, tipo: str):
     return valor
 
 def parsear_dict_valor(lista_keys: list, lista_tipos: list, dict_lista:list[dict]):
+    """
+    convierte los valores de un diccionario a tipos especificos
+
+    arg: 
+        lista_keys (list): contiene las claves del diccionario.
+        lista_tipos (list): contiene los tipos a los que se desea convertir.
+        dict_lista (list[dict]): contiene la lista de diccionarios a convertir.
+
+    return:
+    """
     for dict_ele in dict_lista:
         for key, tipo in zip(lista_keys, lista_tipos):
             if key in dict_ele:
@@ -162,6 +214,16 @@ def parsear_dict_valor(lista_keys: list, lista_tipos: list, dict_lista:list[dict
     return dict_lista
     
 def parsear_dataset_lidict(datos: list[str]) -> list[dict]:
+    """
+    convierte un dataset en una lista de diccionarios
+
+    arg: 
+        datos (list[str]): contiene el dataset en formato de lista de strings.
+        
+    return:
+        lista_dict: lista de diccionarios
+    """
+
     str_claves_limpias = datos.pop(0).replace('\n', '')
     claves = split_texto(str_claves_limpias, ',')
     lista_dict = []
@@ -179,6 +241,17 @@ def parsear_dataset_lidict(datos: list[str]) -> list[dict]:
     return lista_dict
 
 def split_texto(texto: str, separador: str) -> list[str]:
+    """
+    divide un texto en una lista de strings utilizando un separador
+
+    arg: 
+        texto (str): el texto a dividir.
+        separador (str): el separador a utilizar.
+
+    return:
+        lista_str: lista de strings
+    """
+
     lista_str = []
     palabra = ''
 
@@ -193,6 +266,17 @@ def split_texto(texto: str, separador: str) -> list[str]:
     return lista_str
 
 def agregar_si_no_vacio(lista_palabras: list[str], palabra: str) -> bool:
+    """
+    agrega una palabra a una lista si no está vacía
+
+    arg: 
+        lista_palabras (list[str]): contiene la lista de palabras.
+        palabra (str): la palabra a agregar.
+
+    return:
+        hubo_cambio: True si se agregó la palabra, False si no
+    """
+
     hubo_cambio = False
     if palabra != '':
         lista_palabras.append(palabra)
@@ -200,6 +284,16 @@ def agregar_si_no_vacio(lista_palabras: list[str], palabra: str) -> bool:
     return hubo_cambio
 
 def parsear_dataset_producto_matriz(datos: list[str]) -> list[list]:
+    """
+    convierte un dataset de productos en una matriz
+
+    arg: 
+        datos (list[str]): contiene el dataset en formato de lista de strings.
+
+    return:
+        mi_matriz: matriz de productos
+    """
+
     mi_matriz = []
     for linea in datos:
         if datos.index(linea) == 0:
@@ -216,20 +310,56 @@ def parsear_dataset_producto_matriz(datos: list[str]) -> list[list]:
     return mi_matriz
 
 def parsear_str_a_int(texto: str) -> int:
+    """
+    convierte un string a un entero
+
+    arg: 
+        texto (str): el string a convertir.
+        
+    return:
+        numero: entero
+    """
     numero = int(texto)
     return numero
 
 def parsear_str_a_float(texto: str) -> float:
+    """
+    convierte un string a un float
+
+    arg: 
+        texto (str): el string a convertir.
+
+    return:
+        valor: float
+    """
     valor = float(texto)
     return valor
 
 def parsear_str_a_booleano(texto: str) -> bool:
+    """
+    convierte un string a un booleano
+
+    arg: 
+        texto (str): el string a convertir.
+
+    return:
+        valor: booleano
+    """
     if texto == "true":
         return True
     if texto == "false":
         return False
 
 def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
+    """
+    filtra información de un diccionario
+
+    arg: 
+        lista (list[dict]): contiene la lista de diccionarios a filtrar.
+        clave (str): la clave del diccionario por la cual se filtrará.
+        valor (int): el valor por el cual se filtrará.
+    return:
+    """
     item_dicccionario = {}
     for item in lista:
         if item.get(clave) == valor:
@@ -239,15 +369,56 @@ def filtrar_info_dic(lista: list[dict], clave: str, valor: int):
     return item_dicccionario
 
 def filtrar_por_id(dato: dict, valor: int) -> bool:
+    """
+    filtra un cliente por su ID
+
+    arg: 
+        dato (dict): contiene el diccionario a filtrar.
+        valor (int): el ID a filtrar.
+        
+    return:
+        True o False
+    """
     return dato.get("id") == valor
 
 def filtrar_por_id_venta(dato: dict, valor: int) -> bool:
+    """
+    filtra una venta por su ID
+
+    arg: 
+        dato (dict): contiene el diccionario a filtrar.
+        valor (int): el ID a filtrar.
+        
+    return:
+        True o False
+    """
     return dato.get("id_venta") == valor
 
 def filtrar_por_activo(dato: dict, valor: str) -> bool:
+    """
+    filtra por su estado de activo
+
+    arg: 
+        dato (dict): contiene el diccionario a filtrar.
+        valor (str): el estado de activo a filtrar.
+        
+    return:
+        True o False
+    """
     return dato.get("activo") == valor
 
 def filtrar_dato_dict(datos: list[dict], callback, valor: int) -> list[dict]:
+    """
+    filtra un cliente por su ID
+
+    arg: 
+        dato (dict): contiene el diccionario a filtrar.
+        valor (int): el ID a filtrar.
+        
+    return:
+        lista_filtrada: lista de diccionarios filtrados
+    """
+
     filtrados = []
 
     for dato in datos:
@@ -256,6 +427,17 @@ def filtrar_dato_dict(datos: list[dict], callback, valor: int) -> list[dict]:
     return filtrados
 
 def obtener_valores_unicos(lista: list[dict], clave: str) -> list:
+    """
+    obtiene los valores únicos de una clave en una lista de diccionarios
+
+    arg: 
+        lista (list[dict]): contiene la lista de diccionarios.
+        clave (str): la clave del diccionario de la cual se obtendrán los valores únicos.
+        
+    return:
+        lista_ids_unicos: lista de valores únicos
+    """
+
     ids_set = set()
 
     for item in lista:
@@ -266,6 +448,17 @@ def obtener_valores_unicos(lista: list[dict], clave: str) -> list:
     return lista_ids_unicos
 
 def obtener_ids_dict(lista_dict: list[dict], clave: str) -> list:
+    """
+    obtiene una lista de IDs de un diccionario
+
+    arg: 
+        lista_dict (list[dict]): contiene la lista de diccionarios.
+        clave (str): la clave del diccionario de la cual se obtendrán los IDs.
+        
+    return:
+        lista_ids: lista de IDs
+    """
+
     lista_ids = []
 
     for item in lista_dict:
@@ -274,6 +467,16 @@ def obtener_ids_dict(lista_dict: list[dict], clave: str) -> list:
     return lista_ids
 
 def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict]:
+    """
+    obtiene una lista de diccionarios de productos
+
+    arg: 
+        matriz_producto (list[list]): contiene la matriz de productos.
+        
+    return:
+        lista_productos: lista de diccionarios de productos
+    """
+    
     lista_productos = []
 
     for producto in matriz_producto:
@@ -288,6 +491,16 @@ def obtener_list_diccionario_productos(matriz_producto: list[list]) -> list[dict
     return lista_productos
 
 def obtener_productos_activos(lista_productos: list[dict]) -> list[dict]:
+    """
+    filtra los productos activos
+
+    arg: 
+        lista_productos (list[dict]): contiene la lista de productos en formato de diccionario.
+
+    return:
+        dict_productos: lista de diccionarios con productos activos
+    """
+
     dict_productos = []
     for indice in range(len(lista_productos)):
 
@@ -295,7 +508,18 @@ def obtener_productos_activos(lista_productos: list[dict]) -> list[dict]:
             dict_productos.append(lista_productos[indice])
     return dict_productos
 
-def join_lista_a_texto(data: list[str], separador: str):
+def join_lista_a_texto(data: list[str], separador: str) -> str:
+    """
+    convierte una lista de strings en un string separado por un caracter
+
+    arg: 
+        data (list[str]): contiene la lista de strings.
+        separador (str): el caracter por el cual se separarán los strings.
+        
+    return:
+        nuevo_texto (str): el string resultante
+    """
+
     nuevo_texto = ""
     for palabra in data:
         nuevo_texto += f"{palabra}{separador}"
@@ -304,6 +528,18 @@ def join_lista_a_texto(data: list[str], separador: str):
     return nuevo_texto
 
 def extraer_datos_dict(target: list[str], diccionario: dict, separador: str, tipo_dato: str):
+    """
+    extrae los datos de un diccionario y los agrega a una lista de strings
+
+    arg: 
+        target (list[str]): contiene la lista de strings donde se agregarán los datos.
+        diccionario (dict): contiene el diccionario del cual se extraerán los datos.
+        separador (str): el caracter por el cual se separarán los strings.
+        tipo_dato (str): el tipo de dato a extraer ('keys' o 'values').
+
+    return:
+    """
+
     if tipo_dato == 'keys':
         datos = list(diccionario.keys())
     else:
@@ -311,7 +547,16 @@ def extraer_datos_dict(target: list[str], diccionario: dict, separador: str, tip
     headr = join_lista_a_texto(datos, separador) + '\n'
     target.append(headr)
 
-def crear_texto_datos(dataset: list[dict]):
+def crear_texto_datos(dataset: list[dict]) -> list[str]:
+    """
+    convierte un dataset de diccionarios en una lista de strings
+
+    arg: 
+        dataset (list[dict]): contiene el dataset en formato de lista de diccionarios.
+        
+    return:
+        lista_texto: lista de strings
+    """
     lista_texto = []
     extraer_datos_dict(lista_texto, dataset[0], ',', 'keys')
     for heroe in dataset:
