@@ -527,8 +527,8 @@ def extraer_datos_dict(target: list[str], diccionario: dict, separador: str, tip
         datos = list(diccionario.keys())
     else:
         datos = list(diccionario.values())
-    headr = join_lista_a_texto(datos, separador) + '\n'
-    target.append(headr)
+    texto = join_lista_a_texto(datos, separador) + '\n'
+    target.append(texto)
 
 def crear_texto_datos(dataset: list[dict]) -> list[str]:
     """
@@ -542,6 +542,6 @@ def crear_texto_datos(dataset: list[dict]) -> list[str]:
     """
     lista_texto = []
     extraer_datos_dict(lista_texto, dataset[0], ',', 'keys')
-    for heroe in dataset:
-        extraer_datos_dict(lista_texto, heroe, ',', 'values')
+    for dato in dataset:
+        extraer_datos_dict(lista_texto, dato, ',', 'values')
     return lista_texto

@@ -5,7 +5,7 @@
             "username": "andre",
             "password": "1234",
             "tipo": "admin",
-            "esta_online": true
+            "esta_online": false
         },
         {
             "id": 2,

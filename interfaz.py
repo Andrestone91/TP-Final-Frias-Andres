@@ -289,13 +289,6 @@ def aplicacion():
     lista_usuarios: dict = leer_json(ARCHIVO_USUARIOS)
 
     usuario = {}
-    usuario = {
-            "id": 2,
-            "username": "otro",
-            "password": "1234",
-            "tipo": "admin",
-            "esta_online": False
-        }
     
     run = True
     while run:

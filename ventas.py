@@ -53,10 +53,13 @@ def obtener_monto_total(id_venta: int, lista_detalle_ventas: list[dict], lista_d
         monto_total (float): devuelve el monto total de la venta
     """
     total = 0
+    multiplicar = lambda cantidad, precio: cantidad * precio
+
     for detalle in lista_detalle_ventas:
         if detalle.get("id_venta") == id_venta:
             precio = obtener_precio(detalle.get("id_producto"), lista_dict_productos)
-            total += detalle.get("cantidad") * precio
+            resultado = multiplicar(detalle.get("cantidad"), precio)
+            total += resultado
 
     return total
 
@@ -158,25 +161,26 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
     return:
     """
     dict_productos = obtener_list_diccionario_productos(matriz_productos)
-    nfo_completa_activos = filtrar_dato_dict(lista_ventas, filtrar_por_activo, "true")
-    mostrar_info_completa(nfo_completa_activos, "ventas")
+
+    info_completa_activos = filtrar_dato_dict(lista_ventas, filtrar_por_activo, "true")
+    mostrar_info_completa(info_completa_activos, "ventas")
 
     input_venta_id = validar_int("seleccione el ID de la venta para cargar un producto: ")
-    ids_ventas = obtener_valores_unicos(nfo_completa_activos, "id")
+    ids_ventas = obtener_valores_unicos(info_completa_activos, "id")
 
-    for id in ids_ventas:
-        if input_venta_id not in ids_ventas:
-            print("la venta no existe o no disponible")
-            return
+    existe_venta = valida_dato(ids_ventas, input_venta_id, "la venta no existe o no disponible")
+
+    if not existe_venta:
+        return
 
     mostrar_info_completa(dict_productos, "productos")
     input_id_producto = validar_int("ingrese el ID del producto: ")
     ids_productos = obtener_valores_unicos(dict_productos, "id")
 
-    for id in ids_productos:
-        if input_id_producto not in ids_productos:
-            print("el producto no existe")
-            return
+    existe_producto = valida_dato(ids_productos, input_id_producto, "el producto no existe")
+    
+    if not existe_producto:
+        return
     
     producto_seleccionado = filtrar_info_dic(dict_productos, "id", input_id_producto)
 
@@ -187,12 +191,12 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
         print("cantidad supera el limite disponible")
         return
     
-    for producto in dict_productos:
-        if producto.get("id") == input_id_producto:
-            producto.update({"stock": stock - input_cantidad})
-            break
+    producto_actualizado = actualizar_stock_producto(dict_productos, input_id_producto, input_cantidad, stock)
 
-    venta_seleccionado = filtrar_info_dic(nfo_completa_activos, "id", input_venta_id)
+    if not producto_actualizado:
+        return
+    
+    venta_seleccionado = filtrar_info_dic(info_completa_activos, "id", input_venta_id)
     cliente = filtrar_info_dic(lista_clientes, "id", venta_seleccionado.get("id_cliente"))
 
     if not cliente:
@@ -216,6 +220,43 @@ def cargar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], mat
     guardar_dataset_dict_archivo(dict_productos, ARCHIVO_PRODUCTOS)
     mostrar_info_completa(lista_detalle_ventas, "detalle_venta")
 
+def valida_dato(datos, input_data, info) -> bool:
+    """
+    valida si un dato existe en una lista de datos
+
+    arg:
+        datos (list): contiene la lista de datos a validar
+        input_data (any): contiene el dato a validar
+        info (str): contiene el mensaje a mostrar si el dato no existe
+
+    return:
+        True si el dato existe, False si no existe
+    """
+    for id in datos:
+        if input_data not in datos:
+            print(info)
+            return False
+    return True
+
+def actualizar_stock_producto(dict_productos: list[dict], input_id_producto: int, input_cantidad: int, stock: int) -> bool:
+    """
+    actualiza el stock de un producto
+
+    arg: 
+        dict_productos (list[dict]): contiene la lista de productos en formato de diccionario
+        input_id_producto (int): id del producto a modificar
+        input_cantidad (int): cantidad a restar del stock
+        stock (int): stock actual del producto
+
+    return:
+    """
+    for producto in dict_productos:
+        if producto.get("id") == input_id_producto:
+            producto.update({"stock": stock - input_cantidad})
+            return True
+    print("el producto no pudo ser actualizado, no se encontro el producto")
+    return False 
+        
 def modificar_venta(lista_ventas: list[dict], lista_detalle_ventas: list[dict], matriz_productos: list[list],\
                         lista_clientes: list[dict]):
     """
